@@ -31,7 +31,12 @@ public class ParserTest {
     }
 
     /**
-     * Convenience method to tokenize and parse the given input
+      Convenience method to tokenize and parse the given input
+      @throws TokenizerException if there is a token error
+      @throws ParserException if there is a parsing error
+      @param input The expression to be evaluated, as a string
+      @return An abstract syntax tree for that expression
+      
      */
     public static AST parse(final String input)
 	throws TokenizerException, ParserException {
@@ -39,15 +44,16 @@ public class ParserTest {
     }
 
     /**
-     * Like <code>parse</code>, but it does not throw any annotated
-     * exceptions.  This is to avoid repeatedly annotating tests to
-     * throw exceptions.  Internally, if tokenizing or parsing
-     * <code>input</code> throws either a <code>TokenizerException</code>
-     * or a <code>ParserException</code>, this will trigger test failure.
-     * @see edu.ucsb.cs56.pconrad.parsing.parser.Parser#parse
-     * @see edu.ucsb.cs56.pconrad.parsing.tokenizer.TokenizerException
-     * @see edu.ucsb.cs56.pconrad.parsing.parser.ParserException
-     */
+      Like <code>parse</code>, but it does not throw any annotated
+      exceptions.  This is to avoid repeatedly annotating tests to
+      throw exceptions.  Internally, if tokenizing or parsing
+      <code>input</code> throws either a <code>TokenizerException</code>
+      or a <code>ParserException</code>, this will trigger test failure.
+
+      @param input The expression to be evaluated, as a string
+      @return An abstract syntax tree for that expression
+
+    */
     public static AST parseNoException(final String input) {
         AST retval = null;
 

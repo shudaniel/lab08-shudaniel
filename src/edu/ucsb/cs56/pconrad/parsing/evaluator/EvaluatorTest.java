@@ -25,19 +25,24 @@ public class EvaluatorTest {
     }
 
     /**
-     * Convenience method to evaluate the given <code>ast</code>
-     * to an integer
+      Convenience method to evaluate the given <code>ast</code> to an integer
+      @throws EvaluatorException if the AST cannot be evaluated
+      @param ast the AST to be evaluated
+      @return the value of the AST after evaluation
+
      */
     public static int evaluate(final AST ast) throws EvaluatorException {
 	return DefaultInterpreterInterface.DEFAULT.evaluate(ast);
     }
 
     /**
-     * Similar to <code>evaluate</code>, except an <code>EvaluatorException</code>
-     * triggers a test failure.  This lifts the burden of annotating tests which
-     * are supposed to pass with the otherwise superfluous <code>EvaluatorException</code>.
-     * @see edu.ucsb.cs56.pconrad.parsing.evaluator.EvalutatorTest#evaluate
-     * @see edu.ucsb.cs56.pconrad.parsing.evaluator.EvaluatorException
+     Similar to <code>evaluate</code>, except an <code>EvaluatorException</code>
+     triggers a test failure.  This lifts the burden of annotating tests which
+     are supposed to pass with the otherwise superfluous <code>EvaluatorException</code>.
+
+     @param ast The AST to be evaluated
+     @return The value of the expression after it is evaluated
+
      */
     public static int evaluateNoException(final AST ast) {
 	int retval = 0;
