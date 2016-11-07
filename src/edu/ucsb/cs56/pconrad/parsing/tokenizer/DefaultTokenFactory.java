@@ -25,6 +25,14 @@ package edu.ucsb.cs56.pconrad.parsing.tokenizer;
 
 public class DefaultTokenFactory implements TokenFactory {
 
+    /**
+       An default instance of DefaultTokenFactory that can be used
+       so that we don't have to instantiate the object multiple times.
+       Existing tests depend on the existence of this value.
+     */
+    
+    public DefaultTokenFactory DEFAULT = new DefaultTokenFactory();
+    
     /** make the type of token that represents an integer
 	@param value value of the integer, as a string.
 	@return an appropriate token
