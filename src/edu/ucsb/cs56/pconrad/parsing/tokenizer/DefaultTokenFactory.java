@@ -31,7 +31,7 @@ public class DefaultTokenFactory implements TokenFactory {
        Existing tests depend on the existence of this value.
      */
     
-    public DefaultTokenFactory DEFAULT = new DefaultTokenFactory();
+    public static final DefaultTokenFactory DEFAULT = new DefaultTokenFactory();
     
     /** make the type of token that represents an integer
 	@param value value of the integer, as a string.
