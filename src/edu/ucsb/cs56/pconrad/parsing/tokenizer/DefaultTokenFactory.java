@@ -32,6 +32,18 @@ public class DefaultTokenFactory implements TokenFactory {
 
     public Token makeIntToken(String value) { return new IntToken(value);  }
 
+
+    /** make the type of token that represents an integer
+	@param value value of the integer, as an int
+	@return an appropriate token
+    */
+
+    public Token makeIntToken(int value) {
+	return new IntToken(Integer.toString(value));
+    }
+
+
+
     /** make a token that indicates there were one or more illegal characters in the input
 	@param value the sequence of illegal characters 
 	@return an appropriate token
