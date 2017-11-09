@@ -24,3 +24,24 @@ First do:
 mvn package
 java -jar target/cs56Parser-1.0-SNAPSHOT.jar
 ```
+
+# Jacoco test coverage
+
+To check test coverage:
+
+```
+mvn test
+mvn jacoco:report
+```
+
+Then, in a web broswer, open up: 
+
+```
+target/site/jacoco/index.html
+```
+
+On Mac, you can just type the following to open the file in your default web browser:
+
+```
+open target/site/jacoco/index.html
+```
