@@ -83,6 +83,14 @@ public class ParserTest {
     }
 
     @Test
+    public void testParseMinus() {
+        assertEquals(af.makeMinusNode(af.makeLiteral(1),
+                                     af.makeLiteral(2)),
+                     parseNoException("1 - 2"));
+    }
+
+	
+    @Test
     public void testParseParensLiteral() {
         assertEquals(af.makeLiteral(1),
                      parseNoException("(1)"));
