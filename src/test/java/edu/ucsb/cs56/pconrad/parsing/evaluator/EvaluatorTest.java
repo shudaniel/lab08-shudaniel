@@ -93,10 +93,8 @@ public class EvaluatorTest {
 					 evaluateNoException(af.makeUnaryMinusNode(af.makeLiteral(10))));
     }
     
-    // BEGIN TESTS INVOLVING DIVISION BY ZERO
     @Rule
     public ExpectedException thrown = ExpectedException.none();
-
 
 	
     @Test

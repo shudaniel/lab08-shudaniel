@@ -179,24 +179,25 @@ public class TokenizerTest {
 			      Tokenizer.tokenizeToArray("12"));
 	}
 
-        @Test
-	public void testBigFatUglyTestFromLecture() {
+	
+	@Test
+	public void testSequenceOfTokensLecture() {
 	    assertArrayEquals(new Token[] {
-		    tf.makePlusToken(),
-		    tf.makeMinusToken(),
-		    tf.makePlusToken(),
-		    tf.makeIntToken("12"),
-		    tf.makePlusToken()
-		},
-		Tokenizer.tokenizeToArray("+-+12+"));
+				tf.makePlusToken(),
+				tf.makeMinusToken(),
+				tf.makePlusToken(),
+				tf.makeIntToken("12"),
+				tf.makePlusToken()
+			},
+			Tokenizer.tokenizeToArray("+-+12+"));
 	}
-
-        @Test
+	
+	@Test
 	public void testInvalidSingleToken() {
 	    assertArrayEquals(new Token[] {
-		    tf.makeErrorToken("c"),
-		},
-		Tokenizer.tokenizeToArray("c"));
+				tf.makeErrorToken("c"),
+			},
+			Tokenizer.tokenizeToArray("c"));
 	}
     
 }

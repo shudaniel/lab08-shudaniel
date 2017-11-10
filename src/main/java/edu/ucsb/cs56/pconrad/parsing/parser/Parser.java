@@ -157,7 +157,7 @@ public class Parser {
      * @throws ParserException if <code>pos</code> is out of range; that is, there
      *         is no token at <code>pos</code>.
      */
-    private Token tokenAt(final int pos) throws ParserException {
+     Token tokenAt(final int pos) throws ParserException {
 	if (pos < 0 || pos >= input.size()) {
 	    throw new ParserException("Attempted to get token out of position");
 	} else {

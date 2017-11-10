@@ -25,26 +25,26 @@ public class DefaultInterpreterInterface extends InterpreterInterface {
 	@param input the string to be tokenized
      */
     
-    public ArrayList<Token> tokenize(final String input) throws TokenizerException {
-	return new Tokenizer(input).tokenize();
+    public ArrayList<Token> tokenize(final String input) {
+		return Tokenizer.tokenizeToArrayList(input);
     }
     
     /** 
-	Convert sequence of tokens into an abstract syntax tree
-	@param tokens the string to be parsed
-     */
-
+		Convert sequence of tokens into an abstract syntax tree
+		@param tokens the string to be parsed
+	*/
+	
     public AST parse(final ArrayList<Token> tokens) throws ParserException {
-	return new Parser(tokens).parse();
+		return new Parser(tokens).parse();
     }
-
+	
     /** 
         Evaluate an abstract syntax tree representing an integer expression and return the final result
-	@param expression the abstract syntax tree to be evaluated
-     */
-
+		@param expression the abstract syntax tree to be evaluated
+	*/
+	
     public int evaluate(final AST expression) throws EvaluatorException {
-	return Evaluator.evaluate(expression);
+		return Evaluator.evaluate(expression);
     }
     
 } // DefaultInterpreterInterface

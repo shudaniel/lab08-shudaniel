@@ -2,7 +2,7 @@ package edu.ucsb.cs56.pconrad.parsing.parser;
 
 import edu.ucsb.cs56.pconrad.parsing.tokenizer.*;
 import edu.ucsb.cs56.pconrad.parsing.syntax.*;
-
+import java.util.ArrayList;
 import static edu.ucsb.cs56.pconrad.parsing.DefaultInterpreterInterface.DEFAULT;
 
 import static org.junit.Assert.assertEquals;
@@ -32,14 +32,13 @@ public class ParserTest {
 
     /**
       Convenience method to tokenize and parse the given input
-      @throws TokenizerException if there is a token error
       @throws ParserException if there is a parsing error
       @param input The expression to be evaluated, as a string
       @return An abstract syntax tree for that expression
       
      */
     public static AST parse(final String input)
-	throws TokenizerException, ParserException {
+	throws  ParserException {
 	return DEFAULT.tokenizeAndParse(input);
     }
 
@@ -47,8 +46,8 @@ public class ParserTest {
       Like <code>parse</code>, but it does not throw any annotated
       exceptions.  This is to avoid repeatedly annotating tests to
       throw exceptions.  Internally, if tokenizing or parsing
-      <code>input</code> throws either a <code>TokenizerException</code>
-      or a <code>ParserException</code>, this will trigger test failure.
+      <code>input</code> throws 
+      a <code>ParserException</code>, this will trigger test failure.
 
       @param input The expression to be evaluated, as a string
       @return An abstract syntax tree for that expression
@@ -59,12 +58,10 @@ public class ParserTest {
 
         try {
             retval = parse(input);
-	} catch (TokenizerException e) {
-	    fail("Unexpected tokenizer exception: " + e.toString());
         } catch (ParserException e) {
             fail("Unexpected parse exception: " + e.toString());
         }
-
+		
         assert(retval != null);
         return retval;
     }
@@ -137,27 +134,39 @@ public class ParserTest {
     public ExpectedException thrown = ExpectedException.none();
 
     public AST parseExpectFailure(String input)
-        throws TokenizerException, ParserException {
+        throws ParserException {
         thrown.expect(ParserException.class);
         return parse(input);
     }
 
     @Test
     public void testInvalidDoubleNumber()
-        throws TokenizerException, ParserException {
+        throws ParserException {
         parseExpectFailure("5 6");
     }
 
     @Test
     public void testMissingSecondOperand() 
-        throws TokenizerException, ParserException {
+        throws ParserException {
         parseExpectFailure("5 +");
     }
 
     @Test
     public void testMissingSecondOperandInParens() 
-        throws TokenizerException, ParserException {
+        throws ParserException {
         parseExpectFailure("(5 +)");
     }
+
+
+	@Test
+	public void testParserTokenAtException()
+		throws ParserException {
+		thrown.expect(ParserException.class);
+		thrown.expectMessage("Attempted to get token out of position");
+		ArrayList<Token> emptyTokenList = new ArrayList<Token>();
+		Parser p = new Parser(emptyTokenList);
+		Token t = p.tokenAt(0);
+	}
+
 } // ParserTest
 
