@@ -1,2 +1,2 @@
 * [javadoc](apidocs/)
-* [test coverage)(jacoco/)
+* [test coverage](jacoco/)
