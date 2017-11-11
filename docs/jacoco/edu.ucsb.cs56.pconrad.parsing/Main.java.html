@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs56Parser</a> &gt; <a href="index.source.html" class="el_package">edu.ucsb.cs56.pconrad.parsing</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package edu.ucsb.cs56.pconrad.parsing;
+
+import edu.ucsb.cs56.pconrad.parsing.parser.ParserException;
+import edu.ucsb.cs56.pconrad.parsing.evaluator.EvaluatorException;
+
+import java.util.Scanner;
+
+/* 
+   Class with a default main routine that takes expressions from standard input
+   and interprets them, until uses presses q to quit.
+   
+   @author Kyle Dewey, Phill Conrad
+   
+*/
+
+
+<span class="fc" id="L17">public class Main {</span>
+	
+    /**
+       Call on the default interpreter interface to evaluate an expression
+	   
+       @param input expression to evaluate
+       @return value of expression as an int
+       @throws edu.ucsb.cs56.pconrad.parsing.evaluator.EvaluatorException error such as division by zero
+       @throws edu.ucsb.cs56.pconrad.parsing.parser.ParserException syntax error in expression
+	*/
+    
+    public static int evaluate(final String input)
+		throws ParserException, EvaluatorException {
+<span class="fc" id="L30">		return DefaultInterpreterInterface.DEFAULT.tokenizeParseAndEvaluate(input);</span>
+    }
+	
+    /**
+       Determines whether input contained a request to quit the program
+	   
+       @param input the input from the user to be evalulated
+       @return true if main should exit (as determined by &lt;code&gt;shouldExit&lt;/code&gt;
+       @see shouldExit
+	   
+	*/
+    public static boolean shouldExit(final String input) {
+<span class="fc" id="L42">        final String trimmed = input.trim();</span>
+<span class="fc bfc" id="L43" title="All 4 branches covered.">        return trimmed.equals(&quot;q&quot;) || trimmed.equals(&quot;quit&quot;);</span>
+    }
+	
+    /**
+       &lt;p&gt;
+       Evaluate the input, catching exceptions as needed, and printing appropriate messages.
+       &lt;/p&gt;
+	   
+       @param input the input from the user to be evalulated
+       @return true if main should exit (as determined by &lt;code&gt;shouldExit&lt;/code&gt;
+       @see shouldExit
+	*/
+    public static boolean handleInput(final String input) {
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        if (shouldExit(input)) {</span>
+<span class="fc" id="L57">            return true;</span>
+        } else {
+            try {
+<span class="fc" id="L60">                System.out.println(evaluate(input));</span>
+<span class="fc" id="L61">			} catch (ParserException e) {</span>
+<span class="fc" id="L62">                System.out.println(&quot;Failed to parse: &quot; + e.getMessage());</span>
+<span class="fc" id="L63">            } catch (EvaluatorException e) {</span>
+<span class="fc" id="L64">                System.out.println(&quot;Failed to evaluate: &quot; + e.getMessage());</span>
+<span class="fc" id="L65">            }</span>
+<span class="fc" id="L66">            return false;</span>
+        }
+    }
+    
+    public static void main(String[] args) {
+<span class="fc" id="L71">		final Scanner input = new Scanner(System.in);</span>
+		// FiniteStateAutomaton.debug = true;
+<span class="fc" id="L73">		System.out.println(&quot;Enter expressions, or q to quit.&quot;);</span>
+<span class="fc bfc" id="L74" title="All 2 branches covered.">		while (input.hasNextLine() &amp;&amp;</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">               !handleInput(input.nextLine())) {}</span>
+<span class="fc" id="L76">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

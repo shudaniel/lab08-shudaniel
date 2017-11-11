@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ParseAdditiveOrMultiplicative.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs56Parser</a> &gt; <a href="index.source.html" class="el_package">edu.ucsb.cs56.pconrad.parsing.parser</a> &gt; <span class="el_source">ParseAdditiveOrMultiplicative.java</span></div><h1>ParseAdditiveOrMultiplicative.java</h1><pre class="source lang-java linenums">package edu.ucsb.cs56.pconrad.parsing.parser;
+
+import edu.ucsb.cs56.pconrad.parsing.syntax.*;
+
+/**
+ &lt;p&gt;
+ Observation: the only differences between &lt;code&gt;parseMultiplicateExpression&lt;/code&gt;
+ and &lt;code&gt;parseAdditiveExpression&lt;/code&gt; (both &lt;code&gt;private&lt;/code&gt; to
+ &lt;code&gt;Parser&lt;/code&gt;) are:
+ &lt;/p&gt;
+
+ &lt;ol&gt;
+  &lt;li&gt;which method is called internally to parse the nested expressions&lt;/li&gt;
+  &lt;li&gt;which method is called internally to parse the operator in play&lt;/li&gt;
+ &lt;/ol&gt;
+
+ &lt;p&gt;
+ As such, we factor out this commonality into a class that
+ treats these above two methods as abstract, and implements
+ the functionality in terms of these abstract methods.
+ &lt;/p&gt;
+
+ @see edu.ucsb.cs56.pconrad.parsing.parser.Parser
+
+ */
+<span class="fc" id="L26">public abstract class ParseAdditiveOrMultiplicative {</span>
+    // BEGIN ABSTRACT METHODS
+    /**
+     The &quot;base&quot; thing to parse, that is, the component that parses nested expressions.
+     
+     @param pos The position in the input where we start parsing
+     @return a result encapsulating the parsed in AST
+     @throws ParserException when there is a syntax error
+     */
+
+    public abstract ParseResult&lt;AST&gt; parseBase(int pos) throws ParserException;
+
+    /**
+      Parser for the operator in play.
+     
+      @param pos The position in the input where we start parsing
+      @return a result encapsulating the operator parsed in
+      @throws edu.ucsb.cs56.pconrad.parsing.parser.ParserException when there is a syntax error
+     */
+    public abstract ParseResult&lt;Operator&gt; parseOp(int pos) throws ParserException;
+    // END ABSTRACT METHODS
+
+    /**
+     Actually parses in the expression, using &lt;code&gt;parseBase&lt;/code&gt; and
+     &lt;code&gt;parseOp&lt;/code&gt; in the process.
+
+     @param pos The position in the input where we start parsing
+     @return a result encapsulating the overall AST parsed in
+     @throws edu.ucsb.cs56.pconrad.parsing.parser.ParserException if there is a syntax error
+
+     */
+    public ParseResult&lt;AST&gt; parseExp(final int pos) throws ParserException {
+<span class="fc" id="L58">	ParseResult&lt;AST&gt; curResult = parseBase(pos);</span>
+<span class="fc" id="L59">	boolean shouldRun = true;</span>
+
+	/* This loop is one of the harder parts of the code to understand if you are new
+	   to parsing.  It implements the optional 'repeating' part of the productions for
+	   additive and multiplicative expressions.   We always try to &quot;keep going&quot;, and if
+	   that would result in a parsing errors, because we see something other than what we are 
+	   looking for, we catch the error, and stop applying the production */
+	
+<span class="fc bfc" id="L67" title="All 2 branches covered.">	while (shouldRun) {</span>
+	    try {
+<span class="fc" id="L69">		final ParseResult&lt;Operator&gt; opResult = parseOp(curResult.getNextPos());</span>
+<span class="fc" id="L70">		final ParseResult&lt;AST&gt; nextBaseResult = parseBase(opResult.getNextPos());</span>
+<span class="fc" id="L71">		curResult = new ParseResult&lt;AST&gt;(new Binop(curResult.getResult(),</span>
+<span class="fc" id="L72">							   opResult.getResult(),</span>
+<span class="fc" id="L73">							   nextBaseResult.getResult()),</span>
+<span class="fc" id="L74">						 nextBaseResult.getNextPos());</span>
+<span class="fc" id="L75">	    } catch (ParserException e) {</span>
+<span class="fc" id="L76">		shouldRun = false;</span>
+<span class="fc" id="L77">	    }</span>
+	}
+
+<span class="fc" id="L80">	return curResult;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

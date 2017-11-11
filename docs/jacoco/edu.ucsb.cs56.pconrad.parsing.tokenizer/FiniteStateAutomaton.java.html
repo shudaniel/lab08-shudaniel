@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>FiniteStateAutomaton.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs56Parser</a> &gt; <a href="index.source.html" class="el_package">edu.ucsb.cs56.pconrad.parsing.tokenizer</a> &gt; <span class="el_source">FiniteStateAutomaton.java</span></div><h1>FiniteStateAutomaton.java</h1><pre class="source lang-java linenums">package edu.ucsb.cs56.pconrad.parsing.tokenizer;
+
+import java.util.TreeMap;
+import java.util.TreeSet;
+import java.util.Map;
+import java.util.ArrayList;
+
+<span class="fc" id="L8">public class FiniteStateAutomaton {</span>
+
+<span class="fc" id="L10">    public static boolean debug = false;</span>
+
+<span class="fc" id="L12">    private String input = null;</span>
+<span class="fc" id="L13">    private int pos = 0;</span>
+<span class="fc" id="L14">    private State currState = null;</span>
+<span class="fc" id="L15">    private State nextState = null;</span>
+<span class="fc" id="L16">    private State startState = null;</span>
+<span class="fc" id="L17">    private String accumulatedToken = &quot;&quot;;</span>
+
+<span class="fc" id="L19">    private TreeSet&lt;Character&gt; legalChars = new TreeSet&lt;Character&gt;();</span>
+    
+    public void setInput(String input) {
+<span class="fc" id="L22">	this.input = input;</span>
+<span class="fc" id="L23">	this.pos = 0;</span>
+<span class="fc" id="L24">	resetToStart();</span>
+<span class="fc" id="L25">    }</span>
+
+    public String getRemainingInput() {
+<span class="pc bpc" id="L28" title="1 of 4 branches missed.">	if (this.pos &gt;= input.length() || this.pos &lt; 0) {</span>
+<span class="fc" id="L29">	    return &quot;&quot;;</span>
+	}
+<span class="fc" id="L31">	return input.substring(pos);	</span>
+    }
+    
+    private class State {
+	private int num;
+<span class="fc" id="L36">	private TokenMaker tm=null;</span>
+<span class="fc" id="L37">	private TreeMap&lt;Character,State&gt; nextState =</span>
+	    new TreeMap&lt;Character,State&gt;();
+
+<span class="fc" id="L40">	public State(int num) {</span>
+<span class="fc" id="L41">	    this.num = num;</span>
+<span class="fc" id="L42">	}</span>
+
+	public State(int num, TokenMaker tm) {
+<span class="nc" id="L45">	    this(num);</span>
+<span class="nc" id="L46">	}</span>
+	
+	@Override
+	public String toString() {
+<span class="nc" id="L50">	    String retVal = &quot;&quot;;</span>
+<span class="nc bnc" id="L51" title="All 2 branches missed.">	    for(Map.Entry&lt;Character,State&gt; entry : nextState.entrySet()) {</span>
+<span class="nc bnc" id="L52" title="All 2 branches missed.">		if (!retVal.equals(&quot;&quot;))</span>
+<span class="nc" id="L53">		    retVal += &quot;, &quot;; </span>
+<span class="nc" id="L54">		char c = entry.getKey();</span>
+<span class="nc" id="L55">		State s = entry.getValue();</span>
+<span class="nc" id="L56">		retVal += &quot;'&quot; + c + &quot;'-&gt;&quot; + s.num;</span>
+<span class="nc" id="L57">	    }</span>
+<span class="nc" id="L58">	    String tokenString = &quot;&quot;;</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">	    if ( this.tm != null) {</span>
+<span class="nc" id="L60">		Token t = tm.makeToken(&quot;0&quot;);</span>
+<span class="nc" id="L61">		tokenString = &quot; (&quot; + t.toString() + &quot;) &quot;;</span>
+	    }
+<span class="nc" id="L63">	    return &quot;&quot; + this.num + tokenString  + retVal;</span>
+	}
+	
+	@Override public boolean equals(Object obj) {	
+<span class="nc bnc" id="L67" title="All 2 branches missed.">	    if (obj == null) return false;</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">	    if (getClass() != obj.getClass()) return false;</span>
+<span class="nc" id="L69">	    State other = (State) obj;</span>
+<span class="nc" id="L70">	    return other.toString().equals(obj.toString());</span>
+	}
+	
+<span class="nc" id="L73">	@Override public int hashCode(){ return this.toString().hashCode(); }</span>
+	
+    } // inner class State
+
+<span class="fc" id="L77">    private TreeMap&lt;Integer,State&gt; states =</span>
+	new TreeMap&lt;Integer,State&gt;();
+    
+    private State getState(int num) {
+<span class="fc" id="L81">	State s = states.get(num);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">	if (s==null) {</span>
+<span class="fc" id="L83">	    s = new State(num);</span>
+<span class="fc" id="L84">	    states.put(num,s);</span>
+	}
+<span class="fc" id="L86">	return s;</span>
+    }
+
+    
+    public void addState(int num) {
+<span class="fc" id="L91">	State s = getState(num);</span>
+<span class="fc" id="L92">    }</span>
+
+
+    public void addState(int num, TokenMaker tm) {
+<span class="fc" id="L96">	State s = getState(num);</span>
+<span class="fc" id="L97">	s.tm = tm;</span>
+<span class="fc" id="L98">    }</span>
+
+    public void addTransition(char c, int from, int to) {
+<span class="fc" id="L101">	State fromS = getState(from);</span>
+<span class="fc" id="L102">	State toS = getState(to);</span>
+<span class="fc" id="L103">	fromS.nextState.put(c,toS);</span>
+<span class="fc" id="L104">	legalChars.add(c);</span>
+<span class="fc" id="L105">    }</span>
+
+    @Override
+    public String toString() {
+<span class="nc" id="L109">	String retVal = &quot;&quot;;</span>
+<span class="nc" id="L110">	retVal += &quot;FSA: \n&quot;;	</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">	for(Map.Entry&lt;Integer,State&gt; entry : states.entrySet()) {</span>
+<span class="nc" id="L112">	    int num = entry.getKey();</span>
+<span class="nc" id="L113">	    State s = entry.getValue();</span>
+<span class="nc" id="L114">	    retVal += &quot;\t &quot; + num + &quot;: &quot; + s.toString() + &quot;\n&quot;; </span>
+<span class="nc" id="L115">	}</span>
+<span class="nc" id="L116">	return retVal;</span>
+    }
+
+    @Override public boolean equals(Object obj) {	
+<span class="nc bnc" id="L120" title="All 2 branches missed.">	    if (obj == null) return false;</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">	    if (getClass() != obj.getClass()) return false;</span>
+<span class="nc" id="L122">	    FiniteStateAutomaton other = (FiniteStateAutomaton) obj;</span>
+<span class="nc" id="L123">	    return other.toString().equals(obj.toString());</span>
+    }
+	
+    @Override public int hashCode() {
+<span class="nc" id="L127">	return this.toString().hashCode();</span>
+    }
+
+    public void debuggingOutput(String prefix) {
+<span class="pc bpc" id="L131" title="1 of 2 branches missed.">	if (debug) {</span>
+<span class="nc" id="L132">	    String s = prefix;</span>
+<span class="nc bnc" id="L133" title="All 6 branches missed.">	    if (input!=null &amp;&amp; pos &gt;= 0 &amp;&amp; pos &lt; input.length()) {</span>
+<span class="nc" id="L134">		s += &quot;c='&quot; + input.charAt(pos) + &quot;'&quot;;</span>
+	    }
+<span class="nc bnc" id="L136" title="All 2 branches missed.">	    s +=  &quot; currState=&quot; + (currState==null?&quot;null&quot;:currState.num);</span>
+<span class="nc bnc" id="L137" title="All 2 branches missed.">	    s +=  &quot; nextState=&quot; + (nextState==null?&quot;null&quot;:nextState.num);</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">	    s +=  &quot; input=&quot; + (input==null?&quot;null&quot;:&quot;\&quot;&quot; + input+ &quot;\&quot;&quot;);</span>
+<span class="nc" id="L139">	    s +=  &quot; pos=&quot; + pos + &quot; accumulatedToken=&quot; + accumulatedToken;</span>
+<span class="nc" id="L140">	    System.out.println(s);</span>
+	}
+<span class="fc" id="L142">    }</span>
+
+    public void resetToStart() {
+<span class="fc" id="L145">	this.startState = states.get(0);</span>
+<span class="fc" id="L146">	this.currState = startState;</span>
+<span class="fc" id="L147">	this.accumulatedToken = &quot;&quot;;</span>
+<span class="pc bpc" id="L148" title="1 of 2 branches missed.">	if (this.currState==null) {</span>
+<span class="nc" id="L149">	    throw new IllegalStateException(&quot;FSA instance does not have a start state (state 0) defined.&quot;);</span>
+	}
+<span class="fc" id="L151">    }</span>
+
+    private char currChar() {
+<span class="pc bpc" id="L154" title="2 of 4 branches missed.">	if (this.input == null || pos &gt;= this.input.length() ) {</span>
+<span class="nc" id="L155">	    throw new IllegalStateException(&quot;current character is undefined&quot;);</span>
+	}
+<span class="fc" id="L157">	return this.input.charAt(pos);</span>
+    }
+
+    public Token nextToken() {
+
+<span class="fc" id="L162">	debuggingOutput(&quot;top of nextToken: &quot;);</span>
+
+<span class="pc bpc" id="L164" title="1 of 2 branches missed.">	if (this.input == null) {</span>
+<span class="nc" id="L165">	    throw new IllegalStateException(&quot;must call setInput before calling nextToken&quot;);</span>
+	}
+		
+<span class="fc bfc" id="L168" title="All 2 branches covered.">	if (this.getRemainingInput().equals(&quot;&quot;)) {</span>
+<span class="fc" id="L169">	    return null;</span>
+	}
+
+<span class="pc bpc" id="L172" title="1 of 2 branches missed.">	if (this.currState==null) {</span>
+<span class="nc" id="L173">	    throw new IllegalStateException(&quot;No current state; add a state 0, and call setInput&quot;);</span>
+	}
+
+<span class="fc" id="L176">	this.nextState = this.currState.nextState.get(currChar());</span>
+
+<span class="fc bfc" id="L178" title="All 2 branches covered.">	if (this.nextState == null) {</span>
+	    // No transition for current character.
+	    // Emit error token, consuming current character
+<span class="fc" id="L181">	    String s = &quot;&quot; + currChar();</span>
+<span class="fc" id="L182">	    Token t = new ErrorToken(s);</span>
+<span class="fc" id="L183">	    this.pos++;</span>
+<span class="fc" id="L184">	    resetToStart();	    </span>
+<span class="fc" id="L185">	    return t;			    </span>
+	}
+
+	// Otherwise, we have a transition for this character.
+	// As long as we continue to have a next state,
+	// add this character to the token, and go to that state
+
+<span class="fc" id="L192">	debuggingOutput(&quot;nextToken, before while loop: &quot;);</span>
+	
+<span class="fc bfc" id="L194" title="All 2 branches covered.">	while (this.nextState != null) {	    </span>
+<span class="fc" id="L195">	    this.accumulatedToken += currChar();</span>
+<span class="fc" id="L196">	    this.currState = this.nextState; // advance the state</span>
+<span class="fc" id="L197">	    this.pos++;                      // consume the character</span>
+<span class="fc" id="L198">	    debuggingOutput(&quot;nextToken, top of while loop: &quot;);</span>
+	    
+<span class="fc bfc" id="L200" title="All 2 branches covered.">	    if ( this.pos &gt;= this.input.length() ) {</span>
+		// If we've reached the end, don't look at the character
+		// There is no transition we can make
+<span class="fc" id="L203">		this.nextState = null; </span>
+	    } else {
+<span class="fc" id="L205">		this.nextState = this.currState.nextState.get(currChar());</span>
+	    }
+	}
+
+<span class="fc" id="L209">	debuggingOutput(&quot;nextToken, after while loop: &quot;);</span>
+	
+<span class="fc bfc" id="L211" title="All 2 branches covered.">	if (currState.tm != null) {</span>
+<span class="fc" id="L212">	    Token t = currState.tm.makeToken(accumulatedToken.trim());</span>
+<span class="fc" id="L213">	    resetToStart();</span>
+<span class="fc" id="L214">	    return t;</span>
+	}
+
+<span class="pc bpc" id="L217" title="1 of 2 branches missed.">	if (!accumulatedToken.trim().equals(&quot;&quot;)) {</span>
+<span class="nc" id="L218">	    Token t = new ErrorToken(accumulatedToken.trim());</span>
+<span class="nc" id="L219">	    resetToStart();</span>
+<span class="nc" id="L220">	    return t;</span>
+<span class="pc bpc" id="L221" title="1 of 4 branches missed.">	} else if (this.pos &lt; input.length() &amp;&amp; !legalChars.contains(currChar()) ) {</span>
+<span class="fc" id="L222">	    Token t = new ErrorToken(&quot;&quot; + currChar());</span>
+<span class="fc" id="L223">	    pos ++;</span>
+<span class="fc" id="L224">	    resetToStart();</span>
+<span class="fc" id="L225">	    return t;</span>
+	}
+
+<span class="fc" id="L228">	resetToStart();	</span>
+<span class="fc" id="L229">	return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

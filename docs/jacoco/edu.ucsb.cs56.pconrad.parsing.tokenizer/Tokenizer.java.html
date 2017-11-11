@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Tokenizer.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">cs56Parser</a> &gt; <a href="index.source.html" class="el_package">edu.ucsb.cs56.pconrad.parsing.tokenizer</a> &gt; <span class="el_source">Tokenizer.java</span></div><h1>Tokenizer.java</h1><pre class="source lang-java linenums">package edu.ucsb.cs56.pconrad.parsing.tokenizer;
+import java.util.ArrayList;
+
+/**
+   A simple tokenizer based on a Finite State Automaton
+   
+   @author Phill Conrad
+   @see FiniteStateAutomaton
+   
+*/
+
+public class Tokenizer {
+	
+	FiniteStateAutomaton fsa;
+	
+	/**
+	   Create a tokenizer that tokenizes the input provided
+	*/
+
+<span class="fc" id="L20">    public Tokenizer() {</span>
+<span class="fc" id="L21">		fsa = makeFSA();</span>
+<span class="fc" id="L22">    }</span>
+	
+    /**
+       Creates a specific instance of FiniteStateAutomaton with the
+       states and transitions needed to parse the language implemented
+       by this arithmetic expression evaluator.
+	   
+       @return an instance of &lt;code&gt;FiniteStateAutomaton&lt;/code&gt; that can be used to tokenize a string
+	*/
+	
+    public static FiniteStateAutomaton makeFSA() {
+		
+<span class="fc" id="L34">		FiniteStateAutomaton fsa = new FiniteStateAutomaton();</span>
+<span class="fc" id="L35">		fsa.addState(0);</span>
+<span class="fc" id="L36">		fsa.addState(1, s -&gt; new IntToken(s) );</span>
+<span class="fc" id="L37">		fsa.addState(2, s -&gt; new PlusToken() );</span>
+<span class="fc" id="L38">		fsa.addState(3, s -&gt; new MinusToken() );</span>
+<span class="fc" id="L39">		fsa.addState(4, s -&gt; new TimesToken() );</span>
+<span class="fc" id="L40">		fsa.addState(5, s -&gt; new DivideToken() );</span>
+<span class="fc" id="L41">		fsa.addState(6, s -&gt; new LParenToken() );</span>
+<span class="fc" id="L42">		fsa.addState(7, s -&gt; new RParenToken());</span>
+		
+<span class="fc" id="L44">		fsa.addTransition(' ',0,0);</span>
+<span class="fc" id="L45">		fsa.addTransition('\t',0,0);</span>
+<span class="fc" id="L46">		fsa.addTransition('\n',0,0);</span>
+<span class="fc" id="L47">		fsa.addTransition('\r',0,0);</span>
+		
+<span class="fc bfc" id="L49" title="All 2 branches covered.">		for (char c='0'; c&lt;='9'; c++) {</span>
+<span class="fc" id="L50">			fsa.addTransition(c,0,1);</span>
+<span class="fc" id="L51">			fsa.addTransition(c,1,1);</span>
+		}
+<span class="fc" id="L53">		fsa.addTransition('+',0,2);</span>
+<span class="fc" id="L54">		fsa.addTransition('-',0,3);</span>
+<span class="fc" id="L55">		fsa.addTransition('*',0,4);</span>
+<span class="fc" id="L56">		fsa.addTransition('/',0,5);</span>
+<span class="fc" id="L57">		fsa.addTransition('(',0,6);</span>
+<span class="fc" id="L58">		fsa.addTransition(')',0,7);</span>
+		
+<span class="fc" id="L60">		return fsa;</span>
+    }
+	
+    /**
+       Convert the input for this tokenizer into a sequence of tokens
+	   @param input string to tokenize
+       @return list of tokens
+     */
+    
+    public ArrayList&lt;Token&gt; tokenize (String input) {
+<span class="fc" id="L70">		FiniteStateAutomaton fsa = makeFSA();</span>
+<span class="fc" id="L71">		fsa.setInput(input);</span>
+	    
+<span class="fc" id="L73">		ArrayList&lt;Token&gt; tokens = new ArrayList&lt;Token&gt;(); </span>
+		
+<span class="fc" id="L75">		Token t = fsa.nextToken();</span>
+<span class="fc bfc" id="L76" title="All 2 branches covered.">		while (t != null) {</span>
+<span class="fc" id="L77">			tokens.add(t);</span>
+<span class="fc" id="L78">			t = fsa.nextToken();</span>
+		}
+		
+<span class="fc" id="L81">		return tokens;</span>
+    }
+	
+    /**
+	   
+       Convenience method to turn a string into an &lt;code&gt;ArrayList&amp;lt;Token&amp;gt;&lt;/code&gt;.
+	   
+       @param input string
+       @return ArrayList of Token instances
+    */
+    
+    public static ArrayList&lt;Token&gt; tokenizeToArrayList (String input) {
+<span class="fc" id="L93">		return new Tokenizer().tokenize(input);</span>
+    }
+
+    /**
+	   
+       Convenience method for use in testing that takes input as a string,
+       and returns a plain old java array of Token objects
+	   
+       @param input string
+       @return plain old java array of Tokens (i.e. a Token [] instance)
+    */
+    
+    public static Token [] tokenizeToArray (String input) {
+<span class="fc" id="L106">		ArrayList&lt;Token&gt; tokens = tokenizeToArrayList(input);</span>
+<span class="fc" id="L107">		return tokens.toArray(new Token [tokens.size()]);</span>
+    }
+	
+	/** 
+		Return true if user is requesting debugging via command line argument
+		command line argument 
+
+		@param args The command line args passed to main
+		@return true if either &lt;code&gt;-d&lt;/code&gt; or &lt;code&gt;-debug&lt;/code&gt; is passed as &lt;code&gt;args[0]&lt;/code&gt;
+	*/
+	
+	public static boolean isDebugFlagPassed(String [] args) {
+<span class="nc bnc" id="L119" title="All 6 branches missed.">		return (args.length &gt; 0 &amp;&amp; (args[0].equals(&quot;-d&quot;) || args[0].equals(&quot;-debug&quot;)));</span>
+	}
+	
+	/** main method that can be used for interactive testing of the 
+		tokenizer.   Tokenizes hard coded string &lt;code&gt;&quot;2+2&quot;&lt;/code&gt; unless
+		a command line argument is passed, in which case it parses that.
+		
+		@param args Command line arguments, where arg[0] is the string to parse, if present
+    */
+	
+    public static void main(String [] args) {
+
+		// FiniteStateAutomaton.debug = true;
+		
+<span class="nc" id="L133">		String input=&quot;2+2&quot;; // default input</span>
+<span class="nc" id="L134">		boolean debugFlagPassed = isDebugFlagPassed(args);</span>
+		
+<span class="nc bnc" id="L136" title="All 4 branches missed.">		if (args.length == 1 &amp;&amp; !debugFlagPassed)</span>
+<span class="nc" id="L137">			input = args[0]; </span>
+
+<span class="nc bnc" id="L139" title="All 4 branches missed.">		if (args.length &gt;= 2 &amp;&amp; debugFlagPassed)</span>
+<span class="nc" id="L140">			input = args[1];</span>
+
+<span class="nc" id="L142">		System.out.println(&quot;Use -d or --debug for debugging output from FiniteStateAutomaton class&quot;);</span>
+<span class="nc" id="L143">		System.out.println(&quot;Tokenizing: &quot; + input);</span>
+<span class="nc" id="L144">		System.out.println(Tokenizer.tokenizeToArray(input));</span>
+<span class="nc" id="L145">    }</span>
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>
