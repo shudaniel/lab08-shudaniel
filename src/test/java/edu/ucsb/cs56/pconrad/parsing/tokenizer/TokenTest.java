@@ -8,18 +8,18 @@ public class TokenTest {
 
     @Test
     public void testAllDivideTokensAreEqual() {
-	assertEquals(new DivideToken(), new DivideToken());
+		assertEquals(new DivideToken(), new DivideToken());
     }
-
-
+	
+	
     @Test
     public void testAllLParenTokensAreEqual() {
-	assertEquals(new LParenToken(), new LParenToken());
+		assertEquals(new LParenToken(), new LParenToken());
     }
-
+	
     @Test
     public void testAllLParenTokensArentEqualToDivideTokens() {
-	assertFalse(new LParenToken().equals(new DivideToken()));
+		assertFalse(new LParenToken().equals(new DivideToken()));
     }
 
 }

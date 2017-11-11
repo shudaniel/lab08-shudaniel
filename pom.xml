@@ -26,6 +26,13 @@
       <scope>test</scope>
     </dependency>
 
+    <dependency>
+      <groupId>org.hamcrest</groupId>
+      <artifactId>hamcrest-library</artifactId>
+      <version>1.3</version>
+      <scope>test</scope>
+    </dependency>
+    
   </dependencies>
 
   <build>
@@ -63,7 +70,37 @@
             </goals>
           </execution>
 	</executions>
+	
+	<configuration>
+            <outputDirectory>docs/jacoco</outputDirectory>
+        </configuration>
+	
       </plugin>            
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>3.0.0-M1</version>
+	<configuration>
+	  <reportOutputDirectory>docs</reportOutputDirectory>
+        </configuration>
+
+      </plugin>
+
+      <plugin>
+	<artifactId>maven-clean-plugin</artifactId>
+	<version>3.0.0</version>
+	<configuration>
+	  <filesets>
+            <fileset>
+              <directory>docs/apidocs</directory>
+	      <directory>docs/jacoco</directory>
+            </fileset>
+	  </filesets>
+	</configuration>
+      </plugin>
+      
+
     </plugins>
 
 

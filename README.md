@@ -6,6 +6,11 @@ This is the starter code for a lab on recursive descent parsing.
 
 See https://ucsb-cs56-f17.github.io/lab/lab08/ for more explanation.
 
+* [javadoc](http://ucsb-cs56-f17.github.io/parsing-starter-01/javadoc/)
+* [test coverage](http://ucsb-cs56-f17.github.io/parsing-starter-01/jacoco/)
+
+# Using Maven
+
 This code uses maven rather than ant.
 
 | To do this ... | type this...  | Notes |
@@ -13,7 +18,9 @@ This code uses maven rather than ant.
 | compile        | `mvn compile` |       |
 | clean up       | `mvn clean`   |       |
 | test           | `mvn test`    |       |
-| build a jar    | `mvn package` | Builds a jar in `target/cs56Parser-1.0-SNAPSHOT.jar` |
+| build an executable jar    | `mvn package` | Builds a jar in `target/cs56Parser-1.0-SNAPSHOT.jar` |
+| generate javadoc    | `mvn javadoc:javadoc` | Javadoc goes into `docs/javadoc` |
+| generate a test coverage report   | `mvn jacoco:report` | Report goes into `docs/jacoco` |	
 | run            | see below     |       |
 
 # To run
@@ -37,11 +44,15 @@ mvn jacoco:report
 Then, in a web broswer, open up: 
 
 ```
-target/site/jacoco/index.html
+docs/jacoco/index.html
 ```
 
 On Mac, you can just type the following to open the file in your default web browser:
 
 ```
-open target/site/jacoco/index.html
+open docs/jacoco/index.html
 ```
+
+Or push the site to github, and see:
+
+

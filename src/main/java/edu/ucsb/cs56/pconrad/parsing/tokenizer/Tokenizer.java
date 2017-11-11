@@ -15,9 +15,6 @@ public class Tokenizer {
 	
 	/**
 	   Create a tokenizer that tokenizes the input provided
-	   
-	   @param input The string to be tokenized
-
 	*/
 
     public Tokenizer() {
@@ -65,6 +62,7 @@ public class Tokenizer {
 	
     /**
        Convert the input for this tokenizer into a sequence of tokens
+	   @param input string to tokenize
        @return list of tokens
      */
     
@@ -85,7 +83,7 @@ public class Tokenizer {
 	
     /**
 	   
-       Convenience method to turn a string into an ArrayList<Token>.
+       Convenience method to turn a string into an <code>ArrayList&lt;Token&gt;</code>.
 	   
        @param input string
        @return ArrayList of Token instances
@@ -110,10 +108,11 @@ public class Tokenizer {
     }
 	
 	/** 
-		Return true if <code>-d</code> or <code>-debug</code> is passed as the first 
+		Return true if user is requesting debugging via command line argument
 		command line argument 
 
 		@param args The command line args passed to main
+		@return true if either <code>-d</code> or <code>-debug</code> is passed as <code>args[0]</code>
 	*/
 	
 	public static boolean isDebugFlagPassed(String [] args) {

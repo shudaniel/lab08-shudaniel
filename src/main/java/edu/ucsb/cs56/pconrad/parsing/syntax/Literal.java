@@ -19,10 +19,16 @@ public class Literal implements AST {
                 ((Literal)other).value == value);
     }
 
+	/**
+	   hashCode of literal is the value of that literal
+	*/
     public int hashCode() {
-	return value;
+		return value;
     }
 
+	/**
+	   convert to a String (the string representation of the literal)
+	*/
     public String toString() {
         return Integer.toString(value);
     }
