@@ -4,24 +4,24 @@ public class UnaryMinus implements AST {
     // begin instance variables
     private final AST nested;
     // end instance variables
-
+	
 <span class="fc" id="L8">    public UnaryMinus(final AST nested) {</span>
-<span class="fc" id="L9">	this.nested = nested;</span>
+<span class="fc" id="L9">		this.nested = nested;</span>
 <span class="fc" id="L10">    }</span>
-
+	
     public boolean equals(final Object other) {
-<span class="pc bpc" id="L13" title="1 of 2 branches missed.">	return (other instanceof UnaryMinus &amp;&amp;</span>
-<span class="pc bpc" id="L14" title="1 of 2 branches missed.">		((UnaryMinus)other).nested.equals(nested));</span>
+<span class="fc bfc" id="L13" title="All 2 branches covered.">		return (other instanceof UnaryMinus &amp;&amp;</span>
+<span class="fc bfc" id="L14" title="All 2 branches covered.">				((UnaryMinus)other).nested.equals(nested));</span>
     }
-
+	
     public int hashCode() {
-<span class="nc" id="L18">	return 1 + nested.hashCode();</span>
+<span class="fc" id="L18">		return -1 * nested.hashCode();</span>
     }
-
+	
     public String toString() {
-<span class="nc" id="L22">	return &quot;-&quot; + nested.toString();</span>
+<span class="fc" id="L22">		return &quot;-&quot; + nested.toString();</span>
     }
-
+	
 <span class="fc" id="L25">    public AST getNested() { return nested; }</span>
 } // UnaryMinus
 

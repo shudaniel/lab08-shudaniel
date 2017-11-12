@@ -11,15 +11,15 @@ public abstract class OperatorScaffold implements Operator {
 
 <span class="fc" id="L12">    public char getRepr() { return repr; }</span>
     
-<span class="nc" id="L14">    public String toString() { return Character.toString(repr); }</span>
+<span class="fc" id="L14">    public String toString() { return Character.toString(repr); }</span>
 
     public boolean equals(Object other) {
-<span class="pc bpc" id="L17" title="1 of 2 branches missed.">	return (other instanceof OperatorScaffold &amp;&amp;</span>
-<span class="pc bpc" id="L18" title="1 of 2 branches missed.">		((OperatorScaffold)other).getRepr() == repr);</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">		return (other instanceof OperatorScaffold &amp;&amp;</span>
+<span class="fc bfc" id="L18" title="All 2 branches covered.">				((OperatorScaffold)other).getRepr() == repr);</span>
     }
-
+	
     public int hashCode() {
-<span class="nc" id="L22">	return (int)repr;</span>
+<span class="fc" id="L22">		return (int)repr;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

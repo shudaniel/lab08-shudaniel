@@ -34,33 +34,34 @@ public class DefaultTokenFactory implements TokenFactory {
     public static final DefaultTokenFactory DEFAULT = new DefaultTokenFactory();
     
     /** make the type of token that represents an integer
-	@param value value of the integer, as a string.
-	@return an appropriate token
+		@param value value of the integer, as a string.
+		@return an appropriate token
     */
 
-    public Token makeIntToken(String value) { return new IntToken(value);  }
-
+    public Token makeIntToken(String value) {
+		return new IntToken(value);
+	}
 
     /** make the type of token that represents an integer
-	@param value value of the integer, as an int
-	@return an appropriate token
+		@param value value of the integer, as an int
+		@return an appropriate token
     */
 
     public Token makeIntToken(int value) {
-	return new IntToken(Integer.toString(value));
+		return new IntToken(Integer.toString(value));
     }
 
 
 
     /** make a token that indicates there were one or more illegal characters in the input
-	@param value the sequence of illegal characters 
-	@return an appropriate token
+		@param value the sequence of illegal characters 
+		@return an appropriate token
     */
 
     public Token makeErrorToken(String value) { return new ErrorToken(value); }
 
     /** make a token that represents a left parentheses <code>(</code> 
-	@return an appropriate token
+		@return an appropriate token
     */
     
     public Token makeLParenToken() { return new LParenToken(); }
@@ -73,25 +74,25 @@ public class DefaultTokenFactory implements TokenFactory {
     public Token makeRParenToken() { return new RParenToken(); }
 
     /** make a token that represents a plus sign <code>+</code> 
-	@return an appropriate token
+		@return an appropriate token
      */
 
     public Token makePlusToken() { return new PlusToken(); }
 
     /** make a token that represents a minus sign <code>-</code> 
-	@return an appropriate token
+		@return an appropriate token
      */
 
     public Token makeMinusToken() { return new MinusToken(); }
 
     /** make a token that represents a multiplication operator <code>*</code> 
-	@return an appropriate token
+		@return an appropriate token
      */
     
     public Token makeTimesToken() { return new TimesToken(); }
 
     /** make a token that represents a division operator <code>/</code> 
-	@return an appropriate token
+		@return an appropriate token
     */
     
     public Token makeDivideToken() { return new DivideToken(); }

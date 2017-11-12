@@ -17,12 +17,12 @@ import java.util.ArrayList;
     
     public AST tokenizeAndParse(final String input)
 	throws ParserException {
-<span class="fc" id="L20">	return parse(tokenize(input));</span>
+<span class="fc" id="L20">		return parse(tokenize(input));</span>
     }
 
     public int tokenizeParseAndEvaluate(final String input)
 	throws ParserException, EvaluatorException {
-<span class="fc" id="L25">	return evaluate(parse(tokenize(input)));</span>
+<span class="fc" id="L25">		return evaluate(parse(tokenize(input)));</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

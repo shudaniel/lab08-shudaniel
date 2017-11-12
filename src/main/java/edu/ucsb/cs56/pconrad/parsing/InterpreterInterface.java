@@ -17,11 +17,11 @@ public abstract class InterpreterInterface {
     
     public AST tokenizeAndParse(final String input)
 	throws ParserException {
-	return parse(tokenize(input));
+		return parse(tokenize(input));
     }
 
     public int tokenizeParseAndEvaluate(final String input)
 	throws ParserException, EvaluatorException {
-	return evaluate(parse(tokenize(input)));
+		return evaluate(parse(tokenize(input)));
     }
 }

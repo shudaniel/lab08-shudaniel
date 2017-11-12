@@ -168,5 +168,16 @@ public class ParserTest {
 		Token t = p.tokenAt(0);
 	}
 
+	@Test
+	public void testParserTokenAtException_negative()
+		throws ParserException {
+		thrown.expect(ParserException.class);
+		thrown.expectMessage("Attempted to get token out of position");
+		ArrayList<Token> emptyTokenList = new ArrayList<Token>();
+		Parser p = new Parser(emptyTokenList);
+		Token t = p.tokenAt(-1);
+	}
+
+	
 } // ParserTest
 

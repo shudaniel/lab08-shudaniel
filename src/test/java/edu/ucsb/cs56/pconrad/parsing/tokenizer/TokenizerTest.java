@@ -5,6 +5,14 @@ import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.ByteArrayInputStream;
+import java.nio.charset.StandardCharsets;
+import java.io.PrintStream;
+import java.io.InputStream;
+
+
+
 public class TokenizerTest {
 
     private TokenFactory tf = new DefaultTokenFactory();
@@ -63,7 +71,26 @@ public class TokenizerTest {
 	    Tokenizer.tokenizeToArray(" ab c d ef ghi "));
     }
 
+    @Test
+    public void testInterleavedIllegalCharsLegalTokensAndWhiteSpace() {
+        assertArrayEquals(new Token[] {
+		tf.makeErrorToken("a"),
+		tf.makeErrorToken("b"),
+		tf.makeIntToken("12345"),
+		tf.makeErrorToken("d"),
+		tf.makeErrorToken("e"),
+		tf.makeErrorToken("f"),
+		tf.makeErrorToken("g"),
+		tf.makeErrorToken("h"),
+		tf.makePlusToken(),
+		tf.makeErrorToken("i"),
+	    },
+	    Tokenizer.tokenizeToArray(" ab 12345 d ef gh+i "));
+    }
 
+
+
+	
     
     @Test
     public void testSingleDigitIntToken() {
@@ -199,5 +226,69 @@ public class TokenizerTest {
 			},
 			Tokenizer.tokenizeToArray("c"));
 	}
-    
+
+	@Test
+	public void testInvalidTokenAfterValidToken() {
+	    assertArrayEquals(new Token[] {
+				tf.makeIntToken("12"),
+				tf.makeErrorToken("c"),
+			},
+			Tokenizer.tokenizeToArray("12c"));
+	}
+
+	@Test
+	public void testValidInvalidValidInvalid() {
+	    assertArrayEquals(new Token[] {
+				tf.makeIntToken("12"),
+				tf.makeErrorToken("c"),
+				tf.makeIntToken("45"),
+				tf.makeErrorToken("d"),
+			},
+			Tokenizer.tokenizeToArray("12c45d"));
+	}
+
+
+	
+	/**
+	   test the <code>public static void main(String [] args)</code> class
+	   of Main with given input for System.in, and return the output from
+	   System.out
+	 */
+
+	public String testMainWithSystemInAndOut(String system_in, String [] args)
+		throws java.io.UnsupportedEncodingException {
+		
+		ByteArrayOutputStream outContent = new ByteArrayOutputStream();
+		ByteArrayInputStream inContent =
+			new ByteArrayInputStream(system_in.getBytes(StandardCharsets.UTF_8.name()));
+
+		PrintStream saveOut = System.out;
+		InputStream saveIn = System.in;
+		
+		System.setOut(new PrintStream(outContent));
+		System.setIn(inContent);
+
+		Tokenizer.main(args);
+		
+		String returnValue = outContent.toString();
+		System.setOut(saveOut);
+		System.setIn(saveIn);		
+
+		return returnValue;
+	}
+
+	@Test
+	public void testMainWithEmptyArgs() throws java.io.UnsupportedEncodingException  {
+		String outContent = testMainWithSystemInAndOut("", new String[0]);
+		assertEquals("Tokenizing: 2+2\n[IntToken(2), PlusToken, IntToken(2)]", outContent.trim());		
+	}
+
+	@Test
+	public void testMainWithOneArgs() throws java.io.UnsupportedEncodingException  {
+		String outContent = testMainWithSystemInAndOut("", new String[] {"-3"});
+		assertEquals("Tokenizing: -3\n[MinusToken, IntToken(3)]", outContent.trim());		
+	}
+
+	
+	
 }

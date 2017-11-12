@@ -107,17 +107,6 @@ public class Tokenizer {
 <span class="fc" id="L107">		return tokens.toArray(new Token [tokens.size()]);</span>
     }
 	
-	/** 
-		Return true if user is requesting debugging via command line argument
-		command line argument 
-
-		@param args The command line args passed to main
-		@return true if either &lt;code&gt;-d&lt;/code&gt; or &lt;code&gt;-debug&lt;/code&gt; is passed as &lt;code&gt;args[0]&lt;/code&gt;
-	*/
-	
-	public static boolean isDebugFlagPassed(String [] args) {
-<span class="nc bnc" id="L119" title="All 6 branches missed.">		return (args.length &gt; 0 &amp;&amp; (args[0].equals(&quot;-d&quot;) || args[0].equals(&quot;-debug&quot;)));</span>
-	}
 	
 	/** main method that can be used for interactive testing of the 
 		tokenizer.   Tokenizes hard coded string &lt;code&gt;&quot;2+2&quot;&lt;/code&gt; unless
@@ -130,19 +119,14 @@ public class Tokenizer {
 
 		// FiniteStateAutomaton.debug = true;
 		
-<span class="nc" id="L133">		String input=&quot;2+2&quot;; // default input</span>
-<span class="nc" id="L134">		boolean debugFlagPassed = isDebugFlagPassed(args);</span>
+<span class="fc" id="L122">		String input=&quot;2+2&quot;; // default input</span>
 		
-<span class="nc bnc" id="L136" title="All 4 branches missed.">		if (args.length == 1 &amp;&amp; !debugFlagPassed)</span>
-<span class="nc" id="L137">			input = args[0]; </span>
+<span class="fc bfc" id="L124" title="All 2 branches covered.">		if (args.length &gt;= 1)</span>
+<span class="fc" id="L125">			input = args[0]; </span>
 
-<span class="nc bnc" id="L139" title="All 4 branches missed.">		if (args.length &gt;= 2 &amp;&amp; debugFlagPassed)</span>
-<span class="nc" id="L140">			input = args[1];</span>
-
-<span class="nc" id="L142">		System.out.println(&quot;Use -d or --debug for debugging output from FiniteStateAutomaton class&quot;);</span>
-<span class="nc" id="L143">		System.out.println(&quot;Tokenizing: &quot; + input);</span>
-<span class="nc" id="L144">		System.out.println(Tokenizer.tokenizeToArray(input));</span>
-<span class="nc" id="L145">    }</span>
+<span class="fc" id="L127">		System.out.println(&quot;Tokenizing: &quot; + input);</span>
+<span class="fc" id="L128">		System.out.println(Tokenizer.tokenizeToArrayList(input));</span>
+<span class="fc" id="L129">    }</span>
     
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

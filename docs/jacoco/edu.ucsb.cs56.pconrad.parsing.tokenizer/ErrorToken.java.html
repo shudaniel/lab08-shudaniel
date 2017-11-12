@@ -5,18 +5,23 @@ public class ErrorToken extends Token {
     private String value;
     
 <span class="fc" id="L7">    public ErrorToken(String s) {</span>
-<span class="fc" id="L8">	this.value = s;</span>
+<span class="fc" id="L8">		this.value = s;</span>
 <span class="fc" id="L9">    }</span>
 
+<span class="fc" id="L11">	public String getValue() { return value; }</span>
+	
     @Override
-<span class="fc" id="L12">    public String toString() { return &quot;ErrorToken(&quot; + value + &quot;)&quot;; }</span>
+<span class="fc" id="L14">    public String toString() { return &quot;ErrorToken(&quot; + value + &quot;)&quot;; }</span>
 
     @Override
+<span class="fc" id="L17">    public int hashCode() { return value.hashCode(); }</span>
+	
+    @Override
     public boolean equals(Object obj)    {
-<span class="pc bpc" id="L16" title="1 of 2 branches missed.">	if (obj == null) return false;</span>
-<span class="fc bfc" id="L17" title="All 2 branches covered.">	if (getClass() != obj.getClass()) return false;</span>
-<span class="fc" id="L18">	ErrorToken other = (ErrorToken) obj;</span>
-<span class="fc" id="L19">	return other.value.equals(this.value);</span>
+<span class="fc bfc" id="L21" title="All 2 branches covered.">		if (obj == null) return false;</span>
+<span class="fc bfc" id="L22" title="All 2 branches covered.">		if (getClass() != obj.getClass()) return false;</span>
+<span class="fc" id="L23">		ErrorToken other = (ErrorToken) obj;</span>
+<span class="fc" id="L24">		return other.value.equals(this.value);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.7.9.201702052155</span></div></body></html>

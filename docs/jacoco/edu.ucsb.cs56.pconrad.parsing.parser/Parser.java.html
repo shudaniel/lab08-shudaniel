@@ -158,7 +158,7 @@ public class Parser {
      *         is no token at &lt;code&gt;pos&lt;/code&gt;.
      */
      Token tokenAt(final int pos) throws ParserException {
-<span class="pc bpc" id="L161" title="1 of 4 branches missed.">	if (pos &lt; 0 || pos &gt;= input.size()) {</span>
+<span class="fc bfc" id="L161" title="All 4 branches covered.">	if (pos &lt; 0 || pos &gt;= input.size()) {</span>
 <span class="fc" id="L162">	    throw new ParserException(&quot;Attempted to get token out of position&quot;);</span>
 	} else {
 <span class="fc" id="L164">	    return input.get(pos);</span>

@@ -107,17 +107,6 @@ public class Tokenizer {
 		return tokens.toArray(new Token [tokens.size()]);
     }
 	
-	/** 
-		Return true if user is requesting debugging via command line argument
-		command line argument 
-
-		@param args The command line args passed to main
-		@return true if either <code>-d</code> or <code>-debug</code> is passed as <code>args[0]</code>
-	*/
-	
-	public static boolean isDebugFlagPassed(String [] args) {
-		return (args.length > 0 && (args[0].equals("-d") || args[0].equals("-debug")));
-	}
 	
 	/** main method that can be used for interactive testing of the 
 		tokenizer.   Tokenizes hard coded string <code>"2+2"</code> unless
@@ -131,17 +120,12 @@ public class Tokenizer {
 		// FiniteStateAutomaton.debug = true;
 		
 		String input="2+2"; // default input
-		boolean debugFlagPassed = isDebugFlagPassed(args);
 		
-		if (args.length == 1 && !debugFlagPassed)
+		if (args.length >= 1)
 			input = args[0]; 
 
-		if (args.length >= 2 && debugFlagPassed)
-			input = args[1];
-
-		System.out.println("Use -d or --debug for debugging output from FiniteStateAutomaton class");
 		System.out.println("Tokenizing: " + input);
-		System.out.println(Tokenizer.tokenizeToArray(input));
+		System.out.println(Tokenizer.tokenizeToArrayList(input));
     }
     
 }
