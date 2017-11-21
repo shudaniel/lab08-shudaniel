@@ -24,6 +24,7 @@ public class FiniteStateAutomaton {
 
 	/**
 	   Provide the input to the machine
+	   @param input the input that should be tokenized
 	*/
     public void setInput(String input) {
 		this.input = input;
@@ -33,7 +34,9 @@ public class FiniteStateAutomaton {
 
 	/**
 	   Get the remaining input that has not yet been consumed
+	   @return the remaining input that has not yet been consumed by the FSA
 	*/
+
     public String getRemainingInput() {
 		if (this.pos >= input.length()) {
 			return "";

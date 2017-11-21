@@ -2,7 +2,7 @@ package edu.ucsb.cs56.pconrad.parsing.syntax;
 
 /**
    AST for a binary operator.   It has a left subtree and a right subtree which are both
-   instances of <code>AST<code>,
+   instances of <code>AST</code>,
    and a binary operator at the root that implements <code>Operator</code>.
 
    @see Operator

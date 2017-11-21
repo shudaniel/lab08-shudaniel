@@ -96,6 +96,11 @@ public class MainTest {
 	   test the <code>public static void main(String [] args)</code> class
 	   of Main with given input for System.in, and return the output from
 	   System.out
+
+	   @param system_in the output you want to test as input to System.in
+	   @param args the command line args for the main class
+	   @return the output that is written to System.out
+	   @throws java.io.UnsupportedEncodingException May throw this if UTF_8 is not supported.
 	 */
 
 	public String testMainWithSystemInAndOut(String system_in, String [] args)

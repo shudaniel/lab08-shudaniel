@@ -16,7 +16,7 @@
   </path>
   
   <property name="jar.file" value="build/jar/CS56Parser.jar"/>
-  <property name="javadoc.dest" location="docs"/>
+  <property name="javadoc.dest" location="docs/apidocs"/>
   
   <target name="clean" description="clean up">
     <delete dir="build" quiet="true" />
