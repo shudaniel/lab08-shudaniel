@@ -71,9 +71,9 @@
           </execution>
 	</executions>
 	
-	<configuration>
+	<!-- <configuration>
             <outputDirectory>docs/jacoco</outputDirectory>
-        </configuration>
+        </configuration> -->
 	
       </plugin>            
 
@@ -81,23 +81,25 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
         <version>3.0.0-M1</version>
+	<!--
 	<configuration>
 	  <reportOutputDirectory>docs</reportOutputDirectory>
         </configuration>
-
+	-->
+	
       </plugin>
 
       <plugin>
 	<artifactId>maven-clean-plugin</artifactId>
 	<version>3.0.0</version>
-	<configuration>
+	<!-- <configuration>
 	  <filesets>
             <fileset>
               <directory>docs/apidocs</directory>
 	      <directory>docs/jacoco</directory>
             </fileset>
 	  </filesets>
-	</configuration>
+	</configuration>  -->
       </plugin>
       
 
