@@ -9,64 +9,66 @@ import org.junit.rules.ExpectedException;
 
 public class TokenTest {
 
+	public static final TokenFactory tf = DefaultTokenFactory.DEFAULT;
+
     @Test
     public void testAllDivideTokensAreEqual() {
-		assertEquals(new DivideToken(), new DivideToken());
+		assertEquals(tf.makeDivideToken(), tf.makeDivideToken());
     }
 		
     @Test
     public void testAllLParenTokensAreEqual() {
-		assertEquals(new LParenToken(), new LParenToken());
+		assertEquals(tf.makeLParenToken(), tf.makeLParenToken());
     }
 	
     @Test
     public void testAllLParenTokensArentEqualToDivideTokens() {
-		assertFalse(new LParenToken().equals(new DivideToken()));
+		assertFalse(tf.makeLParenToken().equals(tf.makeDivideToken()));
     }
 
     @Test
     public void testErrorTokenNotEqualToNull() {
-		assertFalse(new ErrorToken("@").equals(null));
+		assertFalse(tf.makeErrorToken("@").equals(null));
     }
 
     @Test
     public void testErrorTokenHashCode() {
-		assertTrue(new ErrorToken("@").hashCode()=="@".hashCode());
+		assertTrue(tf.makeErrorToken("@").hashCode()=="@".hashCode());
     }
 	
     @Test
     public void testDivide_toString() {
-		assertEquals("DivideToken",new DivideToken().toString());
+		assertEquals("DivideToken",tf.makeDivideToken().toString());
     }
 
     @Test
     public void testLParen_toString() {
-		assertEquals("LParenToken",new LParenToken().toString());
+		assertEquals("LParenToken",tf.makeLParenToken().toString());
     }
 
 	@Test
     public void testRParen_toString() {
-		assertEquals("RParenToken",new RParenToken().toString());
+		assertEquals("RParenToken",tf.makeRParenToken().toString());
     }
 
 	@Test
     public void testPlus_toString() {
-		assertEquals("PlusToken",new PlusToken().toString());
+		assertEquals("PlusToken",tf.makePlusToken().toString());
     }
 
 	@Test
     public void testMinus_toString() {
-		assertEquals("MinusToken",new MinusToken().toString());
+		assertEquals("MinusToken",tf.makeMinusToken().toString());
     }
 
 	@Test
     public void testTimes_toString() {
-		assertEquals("TimesToken",new TimesToken().toString());
+		assertEquals("TimesToken",tf.makeTimesToken().toString());
     }
 
 	@Test
 	public void test_DefaultTokenFactory_makeIntToken() {
-		assertEquals(new IntToken("3"),DefaultTokenFactory.DEFAULT.makeIntToken(3));
+		assertEquals(tf.makeIntToken("3"),DefaultTokenFactory.DEFAULT.makeIntToken(3));
 	}
 
 	@Test
@@ -86,22 +88,22 @@ public class TokenTest {
 
 	@Test
 	public void test_IntToken_3() {
-		assertEquals("IntToken(3)",new IntToken("3").toString());
+		assertEquals("IntToken(3)",tf.makeIntToken("3").toString());
 	}
 
 	@Test
 	public void test_IntToken_not_equals_null() {
-		assertFalse(new IntToken("4").equals(null));
+		assertFalse(tf.makeIntToken("4").equals(null));
 	}
 
 	@Test
 	public void test_IntToken3_not_equals_IntToken4() {
-		assertFalse(new IntToken("3").equals(new IntToken("4")));
+		assertFalse(tf.makeIntToken("3").equals(tf.makeIntToken("4")));
 	}
 
 	@Test
 	public void test_IntToken3_equals_IntToken3() {
-		assertEquals(new IntToken("3"),new IntToken("3"));
+		assertEquals(tf.makeIntToken("3"),tf.makeIntToken("3"));
 	}
 
 	@Rule
@@ -111,7 +113,7 @@ public class TokenTest {
 	public void test_new_IntToken_badParam() {		
         thrown.expect(IllegalArgumentException.class);
 		thrown.expectMessage("String passed into IntToken could not be parsed into integer value");
-		Token t = new IntToken("blah");
+		Token t = tf.makeIntToken("blah");
     }
 
 	
