@@ -47,17 +47,21 @@ public class ASTTest {
 	public void testEqualOperatorScaffold() {
 		assertThat(new Plus(), is(equalTo(new Plus())));
 	}
-
 	@Test
 	public void testUnequalOperatorScaffold() {
 		assertThat(new Plus(), not(equalTo(new Times())));
 	}
 
 	@Test
-    public void testOperatorScaffoldHashCode() {
-		assertThat(new Plus().hashCode(), is(equalTo((int)('+'))));
+    public void testOperatorEqualsDifferentTypes() {
+		assertThat(new Plus(), not(equalTo("stub")));
     }
 
+	@Test
+	public void testOperatorScaffoldHashCode() {
+		assertThat(new Plus().hashCode(), is(equalTo((int)('+'))));
+	}
+	
 	@Test
     public void testOperatorScaffoldToString() {
 		assertThat(new Minus().toString(), is(equalTo("-")));
