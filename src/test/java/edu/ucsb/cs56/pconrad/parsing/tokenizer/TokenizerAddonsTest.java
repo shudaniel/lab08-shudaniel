@@ -8,7 +8,33 @@ import org.junit.Test;
 public class TokenizerAddonsTest {
 
     private TokenFactory tf = new DefaultTokenFactory();
-    
+
+
+    @Test
+    public void testOneExponentToken() {
+        assertArrayEquals(new Token[] { tf.makeExponentToken() },
+                          Tokenizer.tokenizeToArray("**"));
+    }
+
+	@Test
+    public void testTokenizeOneTimesTwo() {
+        assertArrayEquals(new Token[] {
+				tf.makeIntToken(1),
+				tf.makeTimesToken(),
+			    tf.makeIntToken(2)},
+			Tokenizer.tokenizeToArray("1*2"));
+    }
+
+	@Test
+    public void testTokenizeThreeToTheFourth() {
+        assertArrayEquals(new Token[] {
+				tf.makeIntToken(3),
+				tf.makeExponentToken(),
+			    tf.makeIntToken(4)},
+			Tokenizer.tokenizeToArray("3**4"));
+    }
+
+	
     @Test
     public void testOneEqualsToken() {
         assertArrayEquals(new Token[] { tf.makeEqualsToken() },
@@ -111,11 +137,10 @@ public class TokenizerAddonsTest {
 	    Tokenizer.tokenizeToArray("(78-90)>=13/4"));
     }
 
-
     public void testExponentOperator() {
 	assertArrayEquals(new Token[] {
 		tf.makeIntToken("2"),
-		tf.makeExponentOperatorToken(),
+		tf.makeExponentToken(),
 		tf.makeIntToken("16"),
 	    },
 	    Tokenizer.tokenizeToArray("2**16"));
