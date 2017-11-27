@@ -122,7 +122,7 @@ public interface TokenFactory {
 	@return an appropriate token
     */
 
-    public Token makeExponentOperatorToken();
+    public Token makeExponentToken();
 
 
 }

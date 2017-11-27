@@ -44,7 +44,7 @@ public class TokenizerAddonsTest {
 	
 	@Test
     public void testOneExponentToken() {
-        assertArrayEquals(new Token[] { tf.makeExponentOperatorToken() },
+        assertArrayEquals(new Token[] { tf.makeExponentToken() },
                           Tokenizer.tokenizeToArray("**"));
     }
 
@@ -61,7 +61,7 @@ public class TokenizerAddonsTest {
     public void testTokenizeThreeToTheFourth() {
         assertArrayEquals(new Token[] {
 				tf.makeIntToken(3),
-				tf.makeExponentOperatorToken(),
+				tf.makeExponentToken(),
 			    tf.makeIntToken(4)},
 			Tokenizer.tokenizeToArray("3**4"));
     }
@@ -169,7 +169,7 @@ public class TokenizerAddonsTest {
     public void testExponentOperator() {
 		assertArrayEquals(new Token[] {
 				tf.makeIntToken("2"),
-				tf.makeExponentOperatorToken(),
+				tf.makeExponentToken(),
 				tf.makeIntToken("16"),
 			},
 			Tokenizer.tokenizeToArray("2**16"));

@@ -139,6 +139,6 @@ public class DefaultTokenFactory implements TokenFactory {
 	@return an appropriate token
     */
 
-    public Token makeExponentOperatorToken() { return new ErrorToken("stub"); }
+    public Token makeExponentToken() { return new ErrorToken("stub"); }
 
 }
