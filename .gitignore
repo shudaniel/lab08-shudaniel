@@ -1,5 +1,7 @@
 *~
 target/
+docs/apidocs
+
 
 temp.d/
 *.class
