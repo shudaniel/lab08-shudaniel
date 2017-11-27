@@ -16,31 +16,33 @@ import static org.junit.Assert.assertEquals;
  */
 
 public class ASTTest {
+
+	ASTFactory af = DefaultASTFactory.DEFAULT;
 	
 	@Test
 	public void testEqualLiterals() {
-		assertThat(new Literal(3), is(equalTo(new Literal(3))));
+		assertThat(af.makeLiteral(3), is(equalTo(af.makeLiteral(3))));
 	}
 	
 	@Test
     public void testUnequalLiterals1() {
-		assertThat(new Literal(3), not(equalTo(new Literal(4))));
+		assertThat(af.makeLiteral(3), not(equalTo(af.makeLiteral(4))));
     }
 
 	@Test
     public void testUnequalLiterals2() {
-		assertThat(new Literal(3), not(equalTo(new Times())));
+		assertThat(af.makeLiteral(3), not(equalTo(af.makeTimesNode(null,null))));
     }
 
 	
 	@Test
     public void testLiteralHashCode() {
-		assertThat(new Literal(5).hashCode(), is(equalTo(5)));
+		assertThat(af.makeLiteral(5).hashCode(), is(equalTo(5)));
     }
 
 	@Test
     public void testLiteralToString() {
-		assertThat(new Literal(6).toString(), is(equalTo("6")));
+		assertThat(af.makeLiteral(6).toString(), is(equalTo("6")));
     }
 
 	@Test
@@ -69,27 +71,27 @@ public class ASTTest {
 
 	@Test
 	public void testEqualUnaryMinus() {
-		assertThat(new UnaryMinus(new Literal(6)), is(equalTo(new UnaryMinus(new Literal(6)))));
+		assertThat(af.makeUnaryMinusNode(af.makeLiteral(6)), is(equalTo(af.makeUnaryMinusNode(af.makeLiteral(6)))));
 	}
 
 	@Test
 	public void testUnequalUnaryMinus1() {
-		assertThat(new UnaryMinus(new Literal(6)), not(equalTo(new UnaryMinus(new Literal(7)))));
+		assertThat(af.makeUnaryMinusNode(af.makeLiteral(6)), not(equalTo(af.makeUnaryMinusNode(af.makeLiteral(7)))));
 	}
 
 	@Test
 	public void testUnequalUnaryMinus2() {
-		assertThat(new UnaryMinus(new Literal(6)), not(equalTo(new Minus())));
+		assertThat(af.makeUnaryMinusNode(af.makeLiteral(6)), not(equalTo(new Minus())));
 	}
 	
 	@Test
     public void testUnaryMinusHashCode() {
-		assertEquals(new UnaryMinus(new Literal(5)).hashCode(), -(new Literal(5).hashCode()) );
+		assertEquals(af.makeUnaryMinusNode(af.makeLiteral(5)).hashCode(), -(af.makeLiteral(5).hashCode()) );
     }
 
 	@Test
     public void testUnaryMinusToString() {
-		assertThat(new UnaryMinus(new Literal(5)).toString(), is(equalTo("-5")));
+		assertThat(af.makeUnaryMinusNode(af.makeLiteral(5)).toString(), is(equalTo("-5")));
     }
 
 
