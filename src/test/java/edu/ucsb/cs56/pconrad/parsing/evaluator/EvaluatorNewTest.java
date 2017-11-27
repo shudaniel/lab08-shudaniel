@@ -137,14 +137,26 @@ public class EvaluatorNewTest {
 																   af.makeLiteral(7))));
     }
 
-
-
 	
     @Test
     public void testTwoToTheThird() {
         assertEquals(8,
                      evaluateNoException(af.makeExponentNode(af.makeLiteral(2),
                                                               af.makeLiteral(3))));
+    }
+
+	@Test
+    public void testTwoToTheZero() {
+        assertEquals(1,
+                     evaluateNoException(af.makeExponentNode(af.makeLiteral(2),
+                                                              af.makeLiteral(0))));
+    }
+
+	@Test
+    public void testTwoToTheNegativeOne() {
+        assertEquals(0, /* after integer division */
+                     evaluateNoException(af.makeExponentNode(af.makeLiteral(2),
+                                                              af.makeLiteral(-1))));
     }
 
 
