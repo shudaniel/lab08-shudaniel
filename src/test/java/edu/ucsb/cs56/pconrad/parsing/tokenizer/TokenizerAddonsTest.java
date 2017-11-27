@@ -17,27 +17,27 @@ public class TokenizerAddonsTest {
 
 	@Test
 	public void testLessThanOrEqualsTokenToString() {
-		assertEquals("LTToken(<=)", tf.makeLessThanOrEqualsToken().toString());
+		assertEquals("LEToken(<=)", tf.makeLessThanOrEqualsToken().toString());
 	}
 
 	@Test
 	public void testGreaterThanTokenToString() {
-		assertEquals("LTToken(>)", tf.makeGreaterThanToken().toString());
+		assertEquals("GTToken(>)", tf.makeGreaterThanToken().toString());
 	}
 
 	@Test
 	public void testGreaterThanOrEqualsTokenToString() {
-		assertEquals("LTToken(>=)", tf.makeGreaterThanOrEqualsToken().toString());
+		assertEquals("GEToken(>=)", tf.makeGreaterThanOrEqualsToken().toString());
 	}
 
 	@Test
 	public void testEqualsTokenToString() {
-		assertEquals("LTToken(==)", tf.makeEqualsToken().toString());
+		assertEquals("EQToken(==)", tf.makeEqualsToken().toString());
 	}
 
 	@Test
 	public void testNotEqualsTokenToString() {
-		assertEquals("LTToken(!=)", tf.makeNotEqualsToken().toString());
+		assertEquals("NEToken(!=)", tf.makeNotEqualsToken().toString());
 	}
 
 
