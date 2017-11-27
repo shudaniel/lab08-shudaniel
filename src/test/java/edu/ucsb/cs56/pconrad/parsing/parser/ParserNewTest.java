@@ -33,7 +33,7 @@ public class ParserNewTest {
                                        af.makeLiteral(2)),
                      parseNoException("1 == 2"));
     }
-    
+
     @Test
     public void testNotEqualsLiterals() {
         assertEquals(af.makeNotEqualsNode(af.makeLiteral(1),
@@ -44,31 +44,31 @@ public class ParserNewTest {
     @Test
     public void testExponentLiterals() {
         assertEquals(af.makeExponentNode(af.makeLiteral(2),
-                                          af.makeLiteral(3)),
+                                         af.makeLiteral(3)),
                      parseNoException("2**3"));
     }
 
     @Test
     public void testExponentAssociativity() {
         assertEquals(af.makeExponentNode(af.makeLiteral(2),
-					 af.makeExponentNode(af.makeLiteral(3),
-							     af.makeLiteral(2))),					 
+                                         af.makeExponentNode(af.makeLiteral(3),
+                                                 af.makeLiteral(2))),
                      parseNoException("2**3**2"));
     }
 
     @Test
     public void testExponentAssociativityWithParensRight() {
         assertEquals(af.makeExponentNode(af.makeLiteral(2),
-					 af.makeExponentNode(af.makeLiteral(3),
-							     af.makeLiteral(2))),
+                                         af.makeExponentNode(af.makeLiteral(3),
+                                                 af.makeLiteral(2))),
                      parseNoException("2**(3**2)"));
     }
 
     @Test
     public void testExponentAssociativityWithParensLeft() {
         assertEquals(af.makeExponentNode(af.makeExponentNode(af.makeLiteral(2),
-							     af.makeLiteral(3)),
-					 af.makeLiteral(2)),
+                                         af.makeLiteral(3)),
+                                         af.makeLiteral(2)),
                      parseNoException("(2**3)**2"));
     }
 

@@ -13,16 +13,16 @@ public interface ASTFactory {
     public AST makeDivNode(AST left, AST right);
     public AST makeUnaryMinusNode(AST inner);
 
-	// New AST nodes
-	
-	public AST makeEqualsNode(AST left, AST right);
-	public AST makeNotEqualsNode(AST left, AST right);    
-	public AST makeLessThanNode(AST left, AST right);
-	public AST makeLessThanOrEqualsNode(AST left, AST right);
-	public AST makeGreaterThanNode(AST left, AST right);
-	public AST makeGreaterThanOrEqualsNode(AST left, AST right);
-	
-	public AST makeExponentNode(AST left, AST right);
- 
+    // New AST nodes
+
+    public AST makeEqualsNode(AST left, AST right);
+    public AST makeNotEqualsNode(AST left, AST right);
+    public AST makeLessThanNode(AST left, AST right);
+    public AST makeLessThanOrEqualsNode(AST left, AST right);
+    public AST makeGreaterThanNode(AST left, AST right);
+    public AST makeGreaterThanOrEqualsNode(AST left, AST right);
+
+    public AST makeExponentNode(AST left, AST right);
+
 
 }
