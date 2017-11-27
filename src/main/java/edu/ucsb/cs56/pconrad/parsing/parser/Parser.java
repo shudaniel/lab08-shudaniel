@@ -20,7 +20,7 @@ public class Parser {
     public static final Token TIMES_TOKEN = new TimesToken();
     public static final Token DIV_TOKEN = new DivideToken();
     // END CONSTANTS
-    
+
     // BEGIN INSTANCE VARIABLES
     private final ArrayList<Token> input;
     // END INSTANCE VARIABLES
@@ -31,7 +31,7 @@ public class Parser {
      *              for performance.
      */
     public Parser(final ArrayList<Token> input) {
-	this.input = input;
+        this.input = input;
     }
 
 
@@ -41,57 +41,57 @@ public class Parser {
      *
      * @param pos The position where to start parsing from
      */
-    
+
 
     private ParseResult<AST> parsePrimary(final int pos) throws ParserException {
-	final Token firstToken = tokenAt(pos);
-	
-	if (firstToken.equals(LEFT_PAREN_TOKEN)) {
-	    final ParseResult<AST> nestedExp = parseExpression(pos + 1);
-	    final int nextPos = nestedExp.getNextPos();
-	    if (tokenAt(nextPos).equals(RIGHT_PAREN_TOKEN)) {
-		return new ParseResult<AST>(nestedExp.getResult(),
-					    nextPos + 1);
-	    } else {
-		throw new ParserException("Expected ')'");
-	    }
-	} else if (firstToken.equals(MINUS_TOKEN)) {
-	    final ParseResult<AST> nestedExp = parsePrimary(pos + 1);
-	    return new ParseResult<AST>(new UnaryMinus(nestedExp.getResult()),
-					nestedExp.getNextPos());
-	} else if (firstToken instanceof IntToken) {
-	    return new ParseResult<AST>(new Literal(((IntToken)firstToken).getValue()),
-					pos + 1);
-	} else {
-	    throw new ParserException("Expected primary expression; got: " +
-				      firstToken.toString());
-	}
+        final Token firstToken = tokenAt(pos);
+
+        if (firstToken.equals(LEFT_PAREN_TOKEN)) {
+            final ParseResult<AST> nestedExp = parseExpression(pos + 1);
+            final int nextPos = nestedExp.getNextPos();
+            if (tokenAt(nextPos).equals(RIGHT_PAREN_TOKEN)) {
+                return new ParseResult<AST>(nestedExp.getResult(),
+                                            nextPos + 1);
+            } else {
+                throw new ParserException("Expected ')'");
+            }
+        } else if (firstToken.equals(MINUS_TOKEN)) {
+            final ParseResult<AST> nestedExp = parsePrimary(pos + 1);
+            return new ParseResult<AST>(new UnaryMinus(nestedExp.getResult()),
+                                        nestedExp.getNextPos());
+        } else if (firstToken instanceof IntToken) {
+            return new ParseResult<AST>(new Literal(((IntToken)firstToken).getValue()),
+                                        pos + 1);
+        } else {
+            throw new ParserException("Expected primary expression; got: " +
+                                      firstToken.toString());
+        }
     }
 
-    
+
     private ParseResult<Operator> parsePlusMinus(final int pos) throws ParserException {
-	final Token tokenHere = tokenAt(pos);
-	if (tokenHere.equals(PLUS_TOKEN)) {
-	    return new ParseResult<Operator>(Plus.PLUS, pos + 1);
-	} else if (tokenHere.equals(MINUS_TOKEN)) {
-	    return new ParseResult<Operator>(Minus.MINUS, pos + 1);
-	} else {
-	    throw new ParserException("Expected + or - operator ");
-	}
-	
+        final Token tokenHere = tokenAt(pos);
+        if (tokenHere.equals(PLUS_TOKEN)) {
+            return new ParseResult<Operator>(Plus.PLUS, pos + 1);
+        } else if (tokenHere.equals(MINUS_TOKEN)) {
+            return new ParseResult<Operator>(Minus.MINUS, pos + 1);
+        } else {
+            throw new ParserException("Expected + or - operator ");
+        }
+
     }
-    
+
     private ParseResult<Operator> parseTimesDiv(final int pos) throws ParserException {
-	final Token tokenHere = tokenAt(pos);
-	if (tokenHere.equals(TIMES_TOKEN)) {
-	    return new ParseResult<Operator>(Times.TIMES, pos + 1);
-	} else if (tokenHere.equals(DIV_TOKEN)) {
-	    return new ParseResult<Operator>(Div.DIV, pos + 1);
-	} else {
-	    throw new ParserException("Expected * or / operator ");
-	}
+        final Token tokenHere = tokenAt(pos);
+        if (tokenHere.equals(TIMES_TOKEN)) {
+            return new ParseResult<Operator>(Times.TIMES, pos + 1);
+        } else if (tokenHere.equals(DIV_TOKEN)) {
+            return new ParseResult<Operator>(Div.DIV, pos + 1);
+        } else {
+            throw new ParserException("Expected * or / operator ");
+        }
     }
-    
+
     // BEGIN CODE FOR MULTIPLICATIVE AND ADDITIVE EXPRESSIONS
     /**
      * As with <code>PrimaryTokenVisitor</code>, this is defined as an inner class
@@ -100,13 +100,13 @@ public class Parser {
      */
     private class ParseAdditive extends ParseAdditiveOrMultiplicative {
 
-	public ParseResult<AST> parseBase(final int pos) throws ParserException {
-	    return parseMultiplicativeExpression(pos);
-	}
-	
-	public ParseResult<Operator> parseOp(final int pos) throws ParserException {
-	    return parsePlusMinus(pos);
-	}
+        public ParseResult<AST> parseBase(final int pos) throws ParserException {
+            return parseMultiplicativeExpression(pos);
+        }
+
+        public ParseResult<Operator> parseOp(final int pos) throws ParserException {
+            return parsePlusMinus(pos);
+        }
     }
 
     /**
@@ -115,34 +115,34 @@ public class Parser {
      * making those methods <code>public</code>.
      */
     private class ParseMultiplicative extends ParseAdditiveOrMultiplicative {
-	public ParseResult<AST> parseBase(final int pos) throws ParserException {
-	    return parsePrimary(pos);
-	}
-	public ParseResult<Operator> parseOp(final int pos) throws ParserException {
-	    return parseTimesDiv(pos);
-	}
+        public ParseResult<AST> parseBase(final int pos) throws ParserException {
+            return parsePrimary(pos);
+        }
+        public ParseResult<Operator> parseOp(final int pos) throws ParserException {
+            return parseTimesDiv(pos);
+        }
     }
 
     // because the above two classes hold no state and don't have useful
     // constructors, we can simply allocate these ahead of time and use
     // them throughout
-    
+
     private final ParseAdditive PARSE_ADDITIVE = new ParseAdditive();
     private final ParseMultiplicative PARSE_MULTIPLICATIVE = new ParseMultiplicative();
 
     private ParseResult<AST> parseMultiplicativeExpression(final int pos)
-	throws ParserException {
-	return PARSE_MULTIPLICATIVE.parseExp(pos);
+    throws ParserException {
+        return PARSE_MULTIPLICATIVE.parseExp(pos);
     }
 
     private ParseResult<AST> parseAdditiveExpression(final int pos)
-	throws ParserException {
-	return PARSE_ADDITIVE.parseExp(pos);
+    throws ParserException {
+        return PARSE_ADDITIVE.parseExp(pos);
     }
     // END CODE FOR MULIPLICATIVE AND ADDITIVE EXPRESSIONS
-    
+
     private ParseResult<AST> parseExpression(final int pos) throws ParserException {
-	return parseAdditiveExpression(pos);
+        return parseAdditiveExpression(pos);
     }
 
     /**
@@ -157,12 +157,12 @@ public class Parser {
      * @throws ParserException if <code>pos</code> is out of range; that is, there
      *         is no token at <code>pos</code>.
      */
-     Token tokenAt(final int pos) throws ParserException {
-	if (pos < 0 || pos >= input.size()) {
-	    throw new ParserException("Attempted to get token out of position");
-	} else {
-	    return input.get(pos);
-	}
+    Token tokenAt(final int pos) throws ParserException {
+        if (pos < 0 || pos >= input.size()) {
+            throw new ParserException("Attempted to get token out of position");
+        } else {
+            return input.get(pos);
+        }
     }
 
     /**
@@ -173,11 +173,11 @@ public class Parser {
      *         input <code>)3(</code>.
      */
     public AST parse() throws ParserException {
-	final ParseResult<AST> rawResult = parseExpression(0);
-	if (rawResult.getNextPos() != input.size()) {
-	    throw new ParserException("Extra tokens at the end");
-	} else {
-	    return rawResult.getResult();
-	}
+        final ParseResult<AST> rawResult = parseExpression(0);
+        if (rawResult.getNextPos() != input.size()) {
+            throw new ParserException("Extra tokens at the end");
+        } else {
+            return rawResult.getResult();
+        }
     }
 } // Parser
