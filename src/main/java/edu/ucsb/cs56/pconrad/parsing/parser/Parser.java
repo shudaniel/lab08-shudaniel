@@ -10,9 +10,8 @@ import java.util.*;
  * This is specific to our arithmetic expression language.
  */
 public class Parser {
+
     // BEGIN CONSTANTS
-
-
     public static final Token LEFT_PAREN_TOKEN = new LParenToken();
     public static final Token RIGHT_PAREN_TOKEN = new RParenToken();
     public static final Token PLUS_TOKEN = new PlusToken();
@@ -33,8 +32,6 @@ public class Parser {
     public Parser(final ArrayList<Token> input) {
         this.input = input;
     }
-
-
 
     /**
      * Parses a <code>primary</code> expression, as per our arithmetic expression grammar.
@@ -68,6 +65,7 @@ public class Parser {
         }
     }
 
+	// BEGIN CODE FOR MULIPLICATIVE AND ADDITIVE EXPRESSIONS
 
     private ParseResult<Operator> parsePlusMinus(final int pos) throws ParserException {
         final Token tokenHere = tokenAt(pos);
@@ -92,12 +90,7 @@ public class Parser {
         }
     }
 
-    // BEGIN CODE FOR MULTIPLICATIVE AND ADDITIVE EXPRESSIONS
-    /**
-     * As with <code>PrimaryTokenVisitor</code>, this is defined as an inner class
-     * to get access to all the methods on <code>Parser</code>, without (innapropriately)
-     * making those methods <code>public</code>.
-     */
+
     private class ParseAdditive extends ParseAdditiveOrMultiplicative {
 
         public ParseResult<AST> parseBase(final int pos) throws ParserException {
@@ -109,11 +102,6 @@ public class Parser {
         }
     }
 
-    /**
-     * As with <code>PrimaryTokenVisitor</code>, this is defined as an inner class
-     * to get access to all the methods on <code>Parser</code>, without (innapropriately)
-     * making those methods <code>public</code>.
-     */
     private class ParseMultiplicative extends ParseAdditiveOrMultiplicative {
         public ParseResult<AST> parseBase(final int pos) throws ParserException {
             return parsePrimary(pos);
@@ -139,6 +127,7 @@ public class Parser {
     throws ParserException {
         return PARSE_ADDITIVE.parseExp(pos);
     }
+
     // END CODE FOR MULIPLICATIVE AND ADDITIVE EXPRESSIONS
 
     private ParseResult<AST> parseExpression(final int pos) throws ParserException {
@@ -157,7 +146,8 @@ public class Parser {
      * @throws ParserException if <code>pos</code> is out of range; that is, there
      *         is no token at <code>pos</code>.
      */
-    Token tokenAt(final int pos) throws ParserException {
+
+    public Token tokenAt(final int pos) throws ParserException {
         if (pos < 0 || pos >= input.size()) {
             throw new ParserException("Attempted to get token out of position");
         } else {
