@@ -35,6 +35,34 @@ public class ParserNewTest {
     }
 
     @Test
+    public void testLtLiterals() {
+        assertEquals(af.makeLessThanNode(af.makeLiteral(1),
+                                       af.makeLiteral(2)),
+                     parseNoException("1<2"));
+    }
+
+    @Test
+    public void testLeLiterals() {
+        assertEquals(af.makeLessThanOrEqualsNode(af.makeLiteral(1),
+                                       af.makeLiteral(2)),
+                     parseNoException("1<=2"));
+    }
+
+    @Test
+    public void testGtLiterals() {
+        assertEquals(af.makeGreaterThanNode(af.makeLiteral(1),
+                                       af.makeLiteral(2)),
+                     parseNoException("1>2"));
+    }
+
+    @Test
+    public void testGeLiterals() {
+        assertEquals(af.makeGreaterThanOrEqualsNode(af.makeLiteral(1),
+                                       af.makeLiteral(2)),
+                     parseNoException("1>=2"));
+    }
+	
+    @Test
     public void testNotEqualsLiterals() {
         assertEquals(af.makeNotEqualsNode(af.makeLiteral(1),
                                           af.makeLiteral(2)),
