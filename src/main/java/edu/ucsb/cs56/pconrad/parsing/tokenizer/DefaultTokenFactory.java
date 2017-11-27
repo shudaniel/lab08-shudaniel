@@ -105,7 +105,6 @@ public class DefaultTokenFactory implements TokenFactory {
 
     /** make a token that represents a division operator <code>/</code>
     	@return an appropriate token
-
     */
 
     public Token makeDivideToken() {
@@ -123,7 +122,6 @@ public class DefaultTokenFactory implements TokenFactory {
 
     /** make a token that represents a not equals operator <code>!=</code>
     @return an appropriate token
-
     */
 
     public Token makeNotEqualsToken() {
