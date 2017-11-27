@@ -27,7 +27,7 @@ public abstract class ParseAdditiveOrMultiplicative {
     // BEGIN ABSTRACT METHODS
     /**
      The "base" thing to parse, that is, the component that parses nested expressions.
-     
+
      @param pos The position in the input where we start parsing
      @return a result encapsulating the parsed in AST
      @throws ParserException when there is a syntax error
@@ -37,7 +37,7 @@ public abstract class ParseAdditiveOrMultiplicative {
 
     /**
       Parser for the operator in play.
-     
+
       @param pos The position in the input where we start parsing
       @return a result encapsulating the operator parsed in
       @throws edu.ucsb.cs56.pconrad.parsing.parser.ParserException when there is a syntax error
@@ -55,28 +55,28 @@ public abstract class ParseAdditiveOrMultiplicative {
 
      */
     public ParseResult<AST> parseExp(final int pos) throws ParserException {
-	ParseResult<AST> curResult = parseBase(pos);
-	boolean shouldRun = true;
+        ParseResult<AST> curResult = parseBase(pos);
+        boolean shouldRun = true;
 
-	/* This loop is one of the harder parts of the code to understand if you are new
-	   to parsing.  It implements the optional 'repeating' part of the productions for
-	   additive and multiplicative expressions.   We always try to "keep going", and if
-	   that would result in a parsing errors, because we see something other than what we are 
-	   looking for, we catch the error, and stop applying the production */
-	
-	while (shouldRun) {
-	    try {
-		final ParseResult<Operator> opResult = parseOp(curResult.getNextPos());
-		final ParseResult<AST> nextBaseResult = parseBase(opResult.getNextPos());
-		curResult = new ParseResult<AST>(new Binop(curResult.getResult(),
-							   opResult.getResult(),
-							   nextBaseResult.getResult()),
-						 nextBaseResult.getNextPos());
-	    } catch (ParserException e) {
-		shouldRun = false;
-	    }
-	}
+        /* This loop is one of the harder parts of the code to understand if you are new
+           to parsing.  It implements the optional 'repeating' part of the productions for
+           additive and multiplicative expressions.   We always try to "keep going", and if
+           that would result in a parsing errors, because we see something other than what we are
+           looking for, we catch the error, and stop applying the production */
 
-	return curResult;
+        while (shouldRun) {
+            try {
+                final ParseResult<Operator> opResult = parseOp(curResult.getNextPos());
+                final ParseResult<AST> nextBaseResult = parseBase(opResult.getNextPos());
+                curResult = new ParseResult<AST>(new Binop(curResult.getResult(),
+                                                 opResult.getResult(),
+                                                 nextBaseResult.getResult()),
+                                                 nextBaseResult.getNextPos());
+            } catch (ParserException e) {
+                shouldRun = false;
+            }
+        }
+
+        return curResult;
     }
 }

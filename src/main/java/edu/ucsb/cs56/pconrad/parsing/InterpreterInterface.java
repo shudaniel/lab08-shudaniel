@@ -14,14 +14,14 @@ public abstract class InterpreterInterface {
     public abstract ArrayList<Token> tokenize(String input);
     public abstract AST parse(ArrayList<Token> tokens) throws ParserException;
     public abstract int evaluate(AST expression) throws EvaluatorException;
-    
+
     public AST tokenizeAndParse(final String input)
-	throws ParserException {
-		return parse(tokenize(input));
+    throws ParserException {
+        return parse(tokenize(input));
     }
 
     public int tokenizeParseAndEvaluate(final String input)
-	throws ParserException, EvaluatorException {
-		return evaluate(parse(tokenize(input)));
+    throws ParserException, EvaluatorException {
+        return evaluate(parse(tokenize(input)));
     }
 }

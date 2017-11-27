@@ -32,7 +32,7 @@ public class EvaluatorTest {
 
      */
     public static int evaluate(final AST ast) throws EvaluatorException {
-	return DefaultInterpreterInterface.DEFAULT.evaluate(ast);
+        return DefaultInterpreterInterface.DEFAULT.evaluate(ast);
     }
 
     /**
@@ -45,87 +45,87 @@ public class EvaluatorTest {
 
      */
     public static int evaluateNoException(final AST ast) {
-		int retval = 0;
-		boolean retvalSet = false;
-		
-		try {
-			retval = evaluate(ast);
-			retvalSet = true;
-		} catch (EvaluatorException e) {
-			fail("Unexpected evaluator exception: " + e.toString());
-		}
-		
-		assert(retvalSet);
-		return retval;
+        int retval = 0;
+        boolean retvalSet = false;
+
+        try {
+            retval = evaluate(ast);
+            retvalSet = true;
+        } catch (EvaluatorException e) {
+            fail("Unexpected evaluator exception: " + e.toString());
+        }
+
+        assert(retvalSet);
+        return retval;
     }
-    
+
     @Test
     public void testLiteral() {
-		assertEquals(42,
-					 evaluateNoException(af.makeLiteral(42)));
+        assertEquals(42,
+                     evaluateNoException(af.makeLiteral(42)));
     }
-	
+
     @Test
     public void testPlus() {
-		assertEquals(8,
-					 evaluateNoException(af.makePlusNode(af.makeLiteral(6),
-                                                         af.makeLiteral(2))));
+        assertEquals(8,
+                     evaluateNoException(af.makePlusNode(af.makeLiteral(6),
+                                         af.makeLiteral(2))));
     }
-	
+
     @Test
     public void testMinus() {
-		assertEquals(4,
-					 evaluateNoException(af.makeMinusNode(af.makeLiteral(6),
-														  af.makeLiteral(2))));
+        assertEquals(4,
+                     evaluateNoException(af.makeMinusNode(af.makeLiteral(6),
+                                         af.makeLiteral(2))));
     }
-	
-	
+
+
     @Test
     public void testDivNonZero() {
-		assertEquals(10,
-					 evaluateNoException(af.makeDivNode(af.makeLiteral(30),
-                                                        af.makeLiteral(3))));
+        assertEquals(10,
+                     evaluateNoException(af.makeDivNode(af.makeLiteral(30),
+                                         af.makeLiteral(3))));
     }
-	
+
     @Test
     public void testUnaryMinusLiteral() {
-		assertEquals(-10,
-					 evaluateNoException(af.makeUnaryMinusNode(af.makeLiteral(10))));
+        assertEquals(-10,
+                     evaluateNoException(af.makeUnaryMinusNode(af.makeLiteral(10))));
     }
-    
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-	
+
     @Test
     public void testDivDirectZero() throws EvaluatorException {
-		thrown.expect(EvaluatorException.class);
-		evaluate(af.makeDivNode(af.makeLiteral(14),
+        thrown.expect(EvaluatorException.class);
+        evaluate(af.makeDivNode(af.makeLiteral(14),
                                 af.makeLiteral(0)));
     }
 
-	private class UnknownFakeAST implements AST { }   
-	
-	@Test
+    private class UnknownFakeAST implements AST { }
+
+    @Test
     public void testUnknownASTType() throws EvaluatorException {
-		thrown.expect(EvaluatorException.class);
-		thrown.expectMessage("Unknown Expression Type");
-		evaluate(new UnknownFakeAST());
+        thrown.expect(EvaluatorException.class);
+        thrown.expectMessage("Unknown Expression Type");
+        evaluate(new UnknownFakeAST());
     }
 
-	private class UnknownFakeOperator implements Operator { }   
-	
-	@Test
+    private class UnknownFakeOperator implements Operator { }
+
+    @Test
     public void testUnknownOperatorType() throws EvaluatorException {
-		thrown.expect(EvaluatorException.class);
-		thrown.expectMessage("Unknown Operator Type");
-		Evaluator.evaluate(0, new UnknownFakeOperator(), 0);
+        thrown.expect(EvaluatorException.class);
+        thrown.expectMessage("Unknown Operator Type");
+        Evaluator.evaluate(0, new UnknownFakeOperator(), 0);
     }
 
-	@Test
-	public void stupidTestOfDefaultConstructorToGetTo100pctTestCoverage() {
-		Evaluator e = new Evaluator();
-	}
-	
+    @Test
+    public void stupidTestOfDefaultConstructorToGetTo100pctTestCoverage() {
+        Evaluator e = new Evaluator();
+    }
+
 } // EvaluatorTest
 

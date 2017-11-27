@@ -9,16 +9,20 @@ public abstract class OperatorScaffold implements Operator {
         this.repr = repr;
     }
 
-    public char getRepr() { return repr; }
-    
-    public String toString() { return Character.toString(repr); }
+    public char getRepr() {
+        return repr;
+    }
+
+    public String toString() {
+        return Character.toString(repr);
+    }
 
     public boolean equals(Object other) {
-		return (other instanceof OperatorScaffold &&
-				((OperatorScaffold)other).getRepr() == repr);
+        return (other instanceof OperatorScaffold &&
+                ((OperatorScaffold)other).getRepr() == repr);
     }
-	
+
     public int hashCode() {
-		return (int)repr;
+        return (int)repr;
     }
 }
