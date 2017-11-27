@@ -39,8 +39,6 @@ public class TokenizerAddonsTest {
 	public void testNotEqualsTokenToString() {
 		assertEquals("NEToken(!=)", tf.makeNotEqualsToken().toString());
 	}
-
-
 	
 	@Test
     public void testOneExponentToken() {
