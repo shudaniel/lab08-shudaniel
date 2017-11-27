@@ -53,6 +53,94 @@ public class EvaluatorNewTest {
     }
 
     @Test
+    public void test_GreaterThan_WithEqualValues() {
+        assertEquals(0,
+                     evaluateNoException(af.makeGreaterThanNode(af.makeLiteral(5),
+																af.makeLiteral(5))));
+    }
+
+    @Test
+    public void test_GreaterThanEquals_WithEqualValues() {
+        assertEquals(1,
+                     evaluateNoException(af.makeGreaterThanOrEqualsNode(af.makeLiteral(5),
+																	  af.makeLiteral(5))));
+    }
+
+    @Test
+    public void test_LessThan_WithEqualValues() {
+        assertEquals(0,
+                     evaluateNoException(af.makeLessThanNode(af.makeLiteral(5),
+																af.makeLiteral(5))));
+    }
+
+    @Test
+    public void test_LessThanEquals_WithEqualValues() {
+        assertEquals(1,
+                     evaluateNoException(af.makeLessThanOrEqualsNode(af.makeLiteral(5),
+																	  af.makeLiteral(5))));
+    }
+
+
+	@Test
+    public void test_GreaterThan_FirstLessThanSecond() {
+        assertEquals(0,
+                     evaluateNoException(af.makeGreaterThanNode(af.makeLiteral(5),
+																af.makeLiteral(7))));
+    }
+
+    @Test
+    public void test_GreaterThanEquals_FirstLessThanSecond() {
+        assertEquals(0,
+                     evaluateNoException(af.makeGreaterThanOrEqualsNode(af.makeLiteral(5),
+																	  af.makeLiteral(7))));
+    }
+
+    @Test
+    public void test_LessThan_FirstLessThanSecond() {
+        assertEquals(1,
+                     evaluateNoException(af.makeLessThanNode(af.makeLiteral(5),
+															 af.makeLiteral(7))));
+    }
+
+    @Test
+    public void test_LessThanEquals_FirstLessThanSecond() {
+        assertEquals(1,
+                     evaluateNoException(af.makeLessThanOrEqualsNode(af.makeLiteral(5),
+																   af.makeLiteral(7))));
+    }
+
+	@Test
+    public void test_GreaterThan_SecondLessThanFirst() {
+        assertEquals(1,
+                     evaluateNoException(af.makeGreaterThanNode(af.makeLiteral(9),
+																af.makeLiteral(7))));
+    }
+
+    @Test
+    public void test_GreaterThanEquals_SecondLessThanFirst() {
+        assertEquals(1,
+                     evaluateNoException(af.makeGreaterThanOrEqualsNode(af.makeLiteral(9),
+																	  af.makeLiteral(7))));
+    }
+
+    @Test
+    public void test_LessThan_SecondLessThanFirst() {
+        assertEquals(0,
+                     evaluateNoException(af.makeLessThanNode(af.makeLiteral(9),
+															 af.makeLiteral(7))));
+    }
+
+    @Test
+    public void test_LessThanEquals_SecondLessThanFirst() {
+        assertEquals(0,
+                     evaluateNoException(af.makeLessThanOrEqualsNode(af.makeLiteral(9),
+																   af.makeLiteral(7))));
+    }
+
+
+
+	
+    @Test
     public void testTwoToTheThird() {
         assertEquals(8,
                      evaluateNoException(af.makeExponentNode(af.makeLiteral(2),
