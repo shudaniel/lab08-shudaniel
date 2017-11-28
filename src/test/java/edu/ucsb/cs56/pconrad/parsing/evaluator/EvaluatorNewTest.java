@@ -3,10 +3,15 @@ package edu.ucsb.cs56.pconrad.parsing.evaluator;
 import edu.ucsb.cs56.pconrad.parsing.syntax.*;
 
 import static edu.ucsb.cs56.pconrad.parsing.evaluator.EvaluatorTest.evaluateNoException;
+import static edu.ucsb.cs56.pconrad.parsing.evaluator.EvaluatorTest.evaluate;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import org.junit.Test;
+
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
+
 
 /**
  * Like <code>EvaluatorTest</code>, but it adds in
@@ -159,5 +164,28 @@ public class EvaluatorNewTest {
                                                               af.makeLiteral(-1))));
     }
 
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+
+    @Test
+    public void testDivDirectZero() throws EvaluatorException {
+        thrown.expect(EvaluatorException.class);
+        thrown.expectMessage("Division by zero");		
+        evaluate(af.makeDivNode(af.makeLiteral(14),
+                                af.makeLiteral(0)));
+    }
+
+    @Test
+    public void testZeroToTheZero() throws EvaluatorException {
+        thrown.expect(EvaluatorException.class);
+        thrown.expectMessage("0**0 is undefined");		
+        evaluate(af.makeExponentNode(af.makeLiteral(0),
+									 af.makeLiteral(0)));
+    }
+
+
+	
 
 } // EvaluatorNewTest
