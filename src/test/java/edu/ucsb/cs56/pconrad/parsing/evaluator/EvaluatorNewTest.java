@@ -164,7 +164,36 @@ public class EvaluatorNewTest {
                                                               af.makeLiteral(-1))));
     }
 
+	@Test
+    public void testNeg1ToTheZero() throws EvaluatorException {
+        assertEquals(1,evaluate(af.makeExponentNode(af.makeLiteral(-1),
+													 af.makeLiteral(0))));
+	}
 
+	
+	@Test
+    public void testNeg1ToTheNegative1() throws EvaluatorException {
+        assertEquals(-1,evaluate(af.makeExponentNode(af.makeLiteral(-1),
+													 af.makeLiteral(-1))));
+	}
+
+	
+	@Test
+    public void testNeg1Squared() throws EvaluatorException {
+        assertEquals(1,evaluate(af.makeExponentNode(af.makeLiteral(-1),
+													 af.makeLiteral(2))));
+	}
+
+
+    @Test
+    public void testNeg1ToTheThird() throws EvaluatorException {
+        assertEquals(-1,evaluate(af.makeExponentNode(af.makeLiteral(-1),
+													 af.makeLiteral(3))));
+	}
+
+
+
+	
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
