@@ -105,9 +105,76 @@ public class DefaultTokenFactory implements TokenFactory {
 
     /** make a token that represents a division operator <code>/</code>
     	@return an appropriate token
+<<<<<<< HEAD
     */
 
     public Token makeDivideToken() {
         return new DivideToken();
     }
+=======
+    */
+
+    public Token makeDivideToken() {
+        return new DivideToken();
+    }
+
+
+    /** make a token that represents an equals operator <code>==</code>
+    @return an appropriate token
+    */
+
+    public Token makeEqualsToken() {
+        return new ErrorToken("stub");
+    }
+
+    /** make a token that represents a not equals operator <code>!=</code>
+    @return an appropriate token
+    */
+
+    public Token makeNotEqualsToken() {
+        return new ErrorToken("stub");
+    }
+
+
+    /** make a token that represents a less than operator <code>&lt;</code>
+    @return an appropriate token
+    */
+
+    public Token makeLessThanToken() {
+        return new ErrorToken("stub");
+    }
+
+    /** make a token that represents a less than or equals operator <code>&lt;=</code>
+    @return an appropriate token
+    */
+
+    public Token makeLessThanOrEqualsToken() {
+        return new ErrorToken("stub");
+    }
+
+    /** make a token that represents a greater than operator <code>&gt;</code>
+    @return an appropriate token
+    */
+
+    public Token makeGreaterThanToken() {
+        return new ErrorToken("stub");
+    }
+
+    /** make a token that represents a greater than or equals operator <code>&gt;=</code>
+    @return an appropriate token
+    */
+
+    public Token makeGreaterThanOrEqualsToken() {
+        return new ErrorToken("stub");
+    }
+
+    /** make a token that represents an exponent operator <code>**</code>
+    @return an appropriate token
+    */
+
+    public Token makeExponentToken() {
+        return new ErrorToken("stub");
+    }
+
+>>>>>>> 11034f4eb3c68f1f5e3fb3aee9fc178a3027b851
 }
