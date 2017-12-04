@@ -105,13 +105,6 @@ public class DefaultTokenFactory implements TokenFactory {
 
     /** make a token that represents a division operator <code>/</code>
     	@return an appropriate token
-<<<<<<< HEAD
-    */
-
-    public Token makeDivideToken() {
-        return new DivideToken();
-    }
-=======
     */
 
     public Token makeDivideToken() {
@@ -124,7 +117,7 @@ public class DefaultTokenFactory implements TokenFactory {
     */
 
     public Token makeEqualsToken() {
-        return new ErrorToken("stub");
+        return new EqualsToken();
     }
 
     /** make a token that represents a not equals operator <code>!=</code>
@@ -132,7 +125,7 @@ public class DefaultTokenFactory implements TokenFactory {
     */
 
     public Token makeNotEqualsToken() {
-        return new ErrorToken("stub");
+        return new NotEqualsToken();
     }
 
 
@@ -141,7 +134,7 @@ public class DefaultTokenFactory implements TokenFactory {
     */
 
     public Token makeLessThanToken() {
-        return new ErrorToken("stub");
+        return new LessThanToken();
     }
 
     /** make a token that represents a less than or equals operator <code>&lt;=</code>
@@ -149,7 +142,7 @@ public class DefaultTokenFactory implements TokenFactory {
     */
 
     public Token makeLessThanOrEqualsToken() {
-        return new ErrorToken("stub");
+        return new LessThanEqualToToken();
     }
 
     /** make a token that represents a greater than operator <code>&gt;</code>
@@ -157,7 +150,7 @@ public class DefaultTokenFactory implements TokenFactory {
     */
 
     public Token makeGreaterThanToken() {
-        return new ErrorToken("stub");
+        return new GreaterThanToken();
     }
 
     /** make a token that represents a greater than or equals operator <code>&gt;=</code>
@@ -165,7 +158,7 @@ public class DefaultTokenFactory implements TokenFactory {
     */
 
     public Token makeGreaterThanOrEqualsToken() {
-        return new ErrorToken("stub");
+        return new GreaterThanEqualToToken();
     }
 
     /** make a token that represents an exponent operator <code>**</code>
@@ -173,8 +166,7 @@ public class DefaultTokenFactory implements TokenFactory {
     */
 
     public Token makeExponentToken() {
-        return new ErrorToken("stub");
+        return new ExponentToken();
     }
 
->>>>>>> 11034f4eb3c68f1f5e3fb3aee9fc178a3027b851
 }
