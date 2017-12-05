@@ -6,6 +6,6 @@ public class Div extends OperatorScaffold {
     // end constants
 
     public Div() {
-        super('/');
+        super("/");
     }
 } // Div

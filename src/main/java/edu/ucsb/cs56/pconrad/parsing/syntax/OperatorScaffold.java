@@ -2,19 +2,19 @@ package edu.ucsb.cs56.pconrad.parsing.syntax;
 
 public abstract class OperatorScaffold implements Operator {
     // begin instance variables
-    protected final char repr;
+    protected final String repr;
     // end instance variables
 
-    public OperatorScaffold(char repr) {
+    public OperatorScaffold(String repr) {
         this.repr = repr;
     }
 
-    public char getRepr() {
+    public String getRepr() {
         return repr;
     }
 
     public String toString() {
-        return Character.toString(repr);
+        return repr;
     }
 
     public boolean equals(Object other) {
@@ -23,6 +23,6 @@ public abstract class OperatorScaffold implements Operator {
     }
 
     public int hashCode() {
-        return (int)repr;
+        return repr.hashCode();
     }
 }

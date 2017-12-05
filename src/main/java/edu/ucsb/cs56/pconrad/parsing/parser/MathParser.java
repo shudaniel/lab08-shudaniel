@@ -23,7 +23,7 @@ import edu.ucsb.cs56.pconrad.parsing.syntax.*;
  @see edu.ucsb.cs56.pconrad.parsing.parser.Parser
 
  */
-public abstract class ParseAdditiveOrMultiplicative {
+public abstract class MathExpressionParser {
     // BEGIN ABSTRACT METHODS
     /**
      The "base" thing to parse, that is, the component that parses nested expressions.
@@ -54,7 +54,7 @@ public abstract class ParseAdditiveOrMultiplicative {
      @throws edu.ucsb.cs56.pconrad.parsing.parser.ParserException if there is a syntax error
 
      */
-    public ParseResult<AST> parseExp(final int pos) throws ParserException {
+    public ParseResult<AST> parseExp(final int pos, boolean isLeftAssociated) throws ParserException {
         ParseResult<AST> curResult = parseBase(pos);
         boolean shouldRun = true;
 
@@ -67,16 +67,33 @@ public abstract class ParseAdditiveOrMultiplicative {
         while (shouldRun) {
             try {
                 final ParseResult<Operator> opResult = parseOp(curResult.getNextPos());
-                final ParseResult<AST> nextBaseResult = parseBase(opResult.getNextPos());
+                final ParseResult<AST> nextBaseResult;
+                if(isLeftAssociated){   
+                  nextBaseResult = parseBase(opResult.getNextPos());
+                } 
+                else {
+                  nextBaseResult = parseRightExp(opResult.getNextPos());
+                }
+
                 curResult = new ParseResult<AST>(new Binop(curResult.getResult(),
-                                                 opResult.getResult(),
-                                                 nextBaseResult.getResult()),
-                                                 nextBaseResult.getNextPos());
+                                                            opResult.getResult(),
+                                                            nextBaseResult.getResult()),
+                                                            nextBaseResult.getNextPos());
+
             } catch (ParserException e) {
                 shouldRun = false;
             }
-        }
+          }
 
         return curResult;
     }
+
+    public ParseResult<AST> parseLeftExp(final int pos) throws ParserException {
+        return parseExp(pos, true);
+    }
+
+    public ParseResult<AST> parseRightExp(final int pos) throws ParserException {
+        return parseExp(pos, false);
+    }
+
 }

@@ -6,6 +6,6 @@ public class Times extends OperatorScaffold {
     // end constants
 
     public Times() {
-        super('*');
+        super("*");
     }
 } // Times

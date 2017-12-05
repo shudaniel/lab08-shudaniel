@@ -6,6 +6,6 @@ public class Minus extends OperatorScaffold {
     // end constants
 
     public Minus() {
-        super('-');
+        super("-");
     }
 } // Minus
