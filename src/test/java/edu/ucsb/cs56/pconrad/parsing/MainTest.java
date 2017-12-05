@@ -127,6 +127,8 @@ public class MainTest {
         return returnValue;
     }
 
+
+	
     @Test
     public void testMainWith_q() throws java.io.UnsupportedEncodingException  {
         String outContent = testMainWithSystemInAndOut("q" + newline , new String[0]);
