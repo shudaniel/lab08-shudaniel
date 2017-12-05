@@ -41,6 +41,7 @@ public class Tokenizer {
         fsa.addState(5, s -> new DivideToken() );
         fsa.addState(6, s -> new LParenToken() );
         fsa.addState(7, s -> new RParenToken());
+
         fsa.addState(8, s -> new LessThanToken() );
         fsa.addState(9, s -> new LessThanEqualToToken());
         fsa.addState(10,s -> new GreaterThanToken());
@@ -50,7 +51,7 @@ public class Tokenizer {
         fsa.addState(14);
         fsa.addState(15,s -> new ExponentToken());
         fsa.addState(16,s -> new NotEqualsToken());
-        
+
 
         fsa.addTransition(' ',0,0);
         fsa.addTransition('\t',0,0);
