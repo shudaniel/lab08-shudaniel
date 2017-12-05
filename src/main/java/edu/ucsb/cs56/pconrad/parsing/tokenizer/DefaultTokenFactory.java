@@ -111,7 +111,6 @@ public class DefaultTokenFactory implements TokenFactory {
         return new DivideToken();
     }
 
-
     /** make a token that represents an equals operator <code>==</code>
     @return an appropriate token
     */
@@ -168,5 +167,6 @@ public class DefaultTokenFactory implements TokenFactory {
     public Token makeExponentToken() {
         return new ErrorToken("stub");
     }
+
 
 }

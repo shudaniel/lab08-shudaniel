@@ -21,6 +21,8 @@ import org.junit.Test;
 
 public class MainTest {
 
+	public static final String newline = System.getProperty("line.separator");
+	
     @Test public void test_shouldExit_quit() {
         assertEquals(true,Main.shouldExit("quit"));
     }
@@ -127,20 +129,20 @@ public class MainTest {
 
     @Test
     public void testMainWith_q() throws java.io.UnsupportedEncodingException  {
-        String outContent = testMainWithSystemInAndOut("q\n", new String[0]);
+        String outContent = testMainWithSystemInAndOut("q" + newline , new String[0]);
         assertEquals("Enter expressions, or q to quit.", outContent.trim());
     }
 
     @Test
     public void testMainWith_1_q() throws java.io.UnsupportedEncodingException  {
-        String outContent = testMainWithSystemInAndOut("1\nq\n", new String[0]);
-        assertEquals("Enter expressions, or q to quit.\n1", outContent.trim());
+        String outContent = testMainWithSystemInAndOut("1" + newline + "q" + newline , new String[0]);
+        assertEquals("Enter expressions, or q to quit." + newline + "1", outContent.trim());
     }
 
     @Test
     public void testMainWith_1_1p1_q() throws java.io.UnsupportedEncodingException  {
-        String outContent = testMainWithSystemInAndOut("1\n1+1\nq\n", new String[0]);
-        assertEquals("Enter expressions, or q to quit.\n1\n2", outContent.trim());
+        String outContent = testMainWithSystemInAndOut("1" + newline + "1+1" + newline + "q" + newline , new String[0]);
+        assertEquals("Enter expressions, or q to quit." + newline + "1" + newline + "2", outContent.trim());
     }
 
     @Test
